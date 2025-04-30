@@ -1,0 +1,43 @@
+﻿<div class="max-wrapper">
+	<div id="list-page">
+		{% if Model.Articles.Items.size == 0 %}
+		<div>
+			<p> 没有任何文章。 </p>
+		</div>
+		{% endif %}
+
+		{% for article in Model.Articles.Items %}
+		<section class="list-item">
+			<h2 class="title">
+				<a href="{{ article.Link }}">{{ article.Title }}</a>
+			</h2>
+
+			<div class="tips">
+				<div class="date">
+					<time datetime="{{ article.CreateDate }}">{{ article.CreateDate | format_date: "yyyy-MM-dd" }}</time>
+				</div>
+
+
+				<div class="categories">
+					<span>分类:</span>
+					<a href="{{ article.Category.Link }}">{{ article.Category.Name }}</a>
+				</div>
+
+				{% if article.Tags != null and article.Tags.size > 0 %}
+				<div class="tags">
+					<span>标签:</span>
+					{% for tag in article.Tags %}
+					<a href="{{ tag.Link }}">{{ tag.Name }}</a>
+					{% endfor %}
+				</div>
+				{% endif %}
+			</div>
+
+			<div class="summary">
+				{{ article.Summary }}
+			</div>
+		</section>
+		{% endfor %}
+	</div>
+	{% partial '_Pagination' %}
+</div>

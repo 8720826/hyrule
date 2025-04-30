@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		{% partial '_Head' %}
+		{% rendersection styles %}
+	</head>
+
+	<body>
+		{% partial '_Header' %}
+		<main class="main-wrapper">
+			<div class="main">
+				{% renderbody %}
+			</div>
+			<div class="side">
+				{% partial '_Search' %}
+				{% partial '_SiteCategories' %}
+				{% partial '_Tags' %}
+				{% partial '_Archive' %}
+			</div>
+		</main>
+		{% partial '_Footer' %}
+	</body>
+	{% rendersection scripts %}
+</html>

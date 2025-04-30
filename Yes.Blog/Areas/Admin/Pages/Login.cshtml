@@ -1,0 +1,50 @@
+﻿@page
+@model Yes.Blog.Areas.Admin.Pages.LoginModel
+@{
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" href="/admin/css/login.css">
+    <script src="/admin/js/alpine.min.js" defer></script>
+    <script src="/admin/js/axios.min.js"></script>
+    <script src="/admin/js/main.js"></script>
+    <script src="~/admin/js/login.js" asp-append-version="true"></script>
+    <title>登录到</title>
+
+</head>
+<body class="hold-transition skin-black sidebar-mini">
+
+    <div class="login-box" x-data="data">
+        <div class="login-logo" style="padding: 0 20px; margin-bottom: 0;">
+            <p>
+                Hyrule
+            </p>
+        </div>
+        <div class="login-box-body">
+            <div class="login-box-msg" x-show="$store.errorMessage" x-transition x-text="$store.errorMessage"></div>
+
+            <div class="form-group has-feedback">
+                <input type="text" x-model="user.name" class="form-control" placeholder="用户名">
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" x-model="user.password" class="form-control" placeholder="密码" x-on:keydown.enter="login()">
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                </div><!-- /.col -->
+                <div class="col-md-4">
+                    <button id="btn_login" class="btn btn-primary btn-block btn-flat" x-on:click="login()">登录</button>
+                </div><!-- /.col -->
+            </div>
+        </div><!-- /.login-box-body -->
+    </div><!-- /.login-box -->
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+﻿@page
+@model Yes.Blog.Areas.Admin.Pages.Page.IndexModel
+@{
+}
+
+
+<template x-data x-if="$store.errorMessage">
+	<div class="alert alert-danger" x-show="$store.errorMessage" x-transition x-text="$store.errorMessage"></div>
+</template>
+
+
+<div class="header">
+	<h1 class="page-title">
+		单页面列表
+		<a class="btn btn-default  btn-xs" asp-page="./Add">
+			<i class="fa fa-plus"></i> 添加单页
+		</a>
+	</h1>
+	<ul class="breadcrumb">
+		<li>
+			<a asp-page="/Index">管理中心</a>
+		</li>
+		<li class="active">单页面列表</li>
+	</ul>
+
+</div>
+
+<div class="main-content" x-data="data">
+
+	<div class="row">
+		<div class="col-xs-12 col-md-12 col-lg-12">
+			<template x-for="(item,index) in items" :key="index">
+				<div class="panel panel-default pull-left" style="margin-left:10px;">
+
+					<div class="panel-body">
+						<strong x-text="item.title"></strong>
+						<p x-text ="item.slug">缩略名</p>
+					</div>
+					<div class="panel-footer">
+						<a :href="`page/detail?id=${item.id}`">编辑</a> | <a href="javascript:;" role="button" x-on:click="showModal = true;deleteId=item.id;">删除</a>
+					</div>
+				</div>
+			</template>
+			<template x-if="items.length==0">
+				<p>
+					还没有添加任何单页。
+				</p>
+			</template>
+		</div>
+	</div>
+
+
+	<div x-show.transition.opacity="showModal" class="modal fade in" id="myModal" tabindex="-1" x-cloak>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button x-on:click="showModal = false" type="button" class="close" data-dismiss="modal">×</button>
+					<h3 id="myModalLabel">删除操作确认</h3>
+				</div>
+				<div class="modal-body">
+					<p class="error-text">
+						<i class="fa fa-warning modal-icon"></i>确认要删除这个页面吗?
+						<br>操作后不可恢复.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button x-on:click="showModal = false" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button x-on:click="showModal = false; confirmAction()" class="btn btn-danger" data-dismiss="modal">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<partial name="_Footer" />
+</div>
+
+
+
+@section Scripts {
+	<script src="~/admin/js/page/index.js" asp-append-version="true"></script>
+}

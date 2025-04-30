@@ -1,0 +1,112 @@
+﻿@page
+@model Yes.Blog.Areas.Admin.Pages.User.IndexModel
+@{
+}
+
+<template x-data x-if="$store.errorMessage">
+	<div class="alert alert-danger" x-show="$store.errorMessage" x-transition x-text="$store.errorMessage"></div>
+</template>
+
+
+<div class="header">
+	<h1 class="page-title">
+		管理员列表
+		<a class="btn btn-default  btn-xs" asp-page="./Add">
+			<i class="fa fa-plus"></i> 添加管理员
+		</a>
+	</h1>
+	<ul class="breadcrumb">
+		<li>
+			<a asp-page="/Index">管理中心</a>
+		</li>
+		<li class="active">管理员列表</li>
+	</ul>
+
+</div>
+
+<div class="main-content" x-data="data">
+
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>编号</th>
+				<th>管理员名称</th>
+				<th>邮箱</th>
+				<th>昵称</th>
+				<th>最后登录世间</th>
+				<th style="width: 65px;"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<template x-for="(item,index) in items" :key="index">
+				<tr>
+					<td x-text="item.id"></td>
+					<td x-text="item.name"></td>
+					<td x-text="item.email"></td>
+					<td x-text="item.nickName"></td>
+					<td>
+						<a :href="`user/detail?id=${item.id}`">
+							<i class="fa fa-pencil"></i>
+						</a>
+
+						<a href="javascript:;" role="button" x-on:click="showModal = true;deleteId=item.id;">
+							<i class="fa fa-trash-o"></i>
+						</a>
+					</td>
+				</tr>
+			</template>
+			<template x-if="items.length==0 && !loading">
+				<tr>
+					<td align="center" colspan="10">还没有任何管理员！</td>
+				</tr>
+			</template>
+
+
+
+			<template x-if="loading">
+				<tr>
+					<td colspan="10" style="text-align:center;">
+						<div class="loading-container">
+							<div class="loading"></div>
+						</div>
+					</td>
+				</tr>
+
+			</template>
+		</tbody>
+	</table>
+
+
+	<div x-show.transition.opacity="showModal" class="modal fade in" id="myModal" tabindex="-1" x-cloak>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button x-on:click="showModal = false" type="button" class="close" data-dismiss="modal">×</button>
+					<h3 id="myModalLabel">删除操作确认</h3>
+				</div>
+				<div class="modal-body">
+					<p class="error-text">
+						<i class="fa fa-warning modal-icon"></i>确认要删除这个管理员吗?
+						<br>操作后不可恢复.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button x-on:click="showModal = false" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button x-on:click="showModal = false; confirmAction()" class="btn btn-danger" data-dismiss="modal">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<partial name="_Footer" />
+</div>
+
+
+
+@section Scripts {
+	<script src="~/admin/js/user/index.js" asp-append-version="true"></script>
+}
+
+

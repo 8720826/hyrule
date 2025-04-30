@@ -1,0 +1,143 @@
+﻿@page
+@model Yes.Blog.Areas.Admin.Pages.Article.DetailModel
+@{
+}
+
+@section Styles {
+    <link rel="stylesheet" href="/admin/tui.editor/toastui-editor.min.css" />
+    <script src="/admin/tui.editor/toastui-editor-all.min.js"></script>
+    <script src="/admin/tui.editor/zh-cn.min.js"></script>
+}
+
+<template x-data x-if="$store.errorMessage||1">
+   
+    <div class="alert alert-danger floating-div" x-show="$store.errorMessage" x-transition x-on:dblclick.prevent="$store.errorMessage=''">
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close" x-on:click.prevent="$store.errorMessage=''"><span aria-hidden="true">&times;</span></button>
+         <p x-html="$store.errorMessage"></p>
+    </div>
+</template>
+
+<div class="header">
+    <div class="stats">
+    </div>
+
+
+    <h1 class="page-title">编辑文章</h1>
+    <ul class="breadcrumb">
+        <li>
+            <a asp-page="/Index">管理中心</a>
+        </li>
+        <li>
+            <a asp-page="/Article/Index">文章列表</a>
+        </li>
+        <li class="active">编辑文章</li>
+    </ul>
+</div>
+
+<div class="main-content" x-data="data">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-9 col-md-9 col-sm-9">
+
+                    <div class="form-group">
+                        <label>内容</label>
+
+                        <div id="editor"></div>
+                    </div>
+
+                    <div class="btn-toolbar list-toolbar pull-right">
+
+
+                        <button class="btn btn-primary" x-on:click="article.isDraft = false;  editArticle()">
+                            <i class="fa fa-angle-double-up"></i> 发布文章
+                        </button>
+
+
+
+                        <div class="btn-group">
+                            <button class="btn btn-default">
+                                <i class="fa fa-external-link"></i> 预览
+                            </button>
+
+                            <button class="btn btn-default" x-on:click="article.isDraft = true;  editArticle()">
+                                <i class="fa fa-save"></i> 保存为草稿
+                            </button>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="form-group">
+                        <label class="control-label" for="inputSuccess">标题</label>
+                        <input type="text" class="form-control" x-model="article.title">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="inputSuccess">缩略名</label>
+                        <input type="text" class="form-control" x-model="article.slug">
+                    </div>
+                    <div class="form-group">
+                        <label>文章分类</label>
+                        <select class="form-control" x-model="article.categoryId">
+                            <option value="0">请选择分类</option>
+                            <template x-for="(item,index) in categories" :key="index">
+                                <option :value="item.id" x-text="item.name"></option>
+                            </template>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>标签</label>
+                        <div id="tag-content" class="tag-content" >
+                            <template x-for="(tag,index) in article.tags" :key="index">
+                                <tag><span x-text="tag"></span><a class="tag-close" x-on:click="article.tags.splice(index, 1)"></a></tag>
+                            </template>
+                            
+                            <div id="tag-input" class="tag-input" placeholder="添加标签" x-on:keydown.enter.prevent="saveTags()"></div>
+                            <input type="hidden" x-model="article.tag" id="tag">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>封面图</label>
+                        <div id="img-container">
+                            <template x-if="article.coverUrl">
+                                <div class="img-thumb img-item">
+                                    <img class="thumb-icon" :src="article.coverUrl" />
+                                    <a href="javascript:;" class="img-remove" x-on:click="article.coverUrl='';tempfile=null">x</a>
+                                </div>
+                            </template>
+                            <template x-if="!article.coverUrl">
+                                <div class="img-up-add  img-item">
+                                    <span class="img-add-icon" x-on:click="addIcon()">+</span>
+                                </div>
+                            </template>
+                            <input type="hidden" x-model="article.coverUrl">
+                            <input type="file" name="files" id="img-file-input" x-model="tempfile" x-on:change="handleFileChange($event.target.files[0],function(url){ article.coverUrl=url; })">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>摘要</label>
+                        <textarea class="form-control" rows="9" x-model="article.summary"></textarea>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+    <partial name="_Footer" />
+</div>
+
+@section Scripts {
+    <script src="~/admin/js/qiniu.min.js" asp-append-version="true"></script>
+    <script src="~/admin/js/article/detail.js" asp-append-version="true"></script>
+}
+

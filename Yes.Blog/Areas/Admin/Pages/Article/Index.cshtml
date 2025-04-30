@@ -1,0 +1,137 @@
+﻿@page
+@model Yes.Blog.Areas.Admin.Pages.Article.IndexModel
+@{
+}
+
+
+<template x-if="$store.errorMessage">
+	<div class="alert alert-danger" x-show="$store.errorMessage" x-transition x-text="$store.errorMessage"></div>
+</template>
+
+
+<div class="header">
+	<h1 class="page-title">
+		文章列表
+		<a class="btn btn-default  btn-xs" asp-page="./Add">
+			<i class="fa fa-plus"></i> 写文章
+		</a>
+	</h1>
+	<ul class="breadcrumb">
+		<li>
+			<a asp-page="/Index">管理中心</a>
+		</li>
+		<li class="active">文章列表</li>
+	</ul>
+
+</div>
+<div class="main-content" x-data="data">
+
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>编号</th>
+				<th>标题</th>
+				<th>分类</th>
+				<th>发布时间</th>
+				<th style="width: 65px;"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<template x-for="(item,index) in pageinfo.items" :key="index">
+				<tr>
+					<td x-text="item.id"></td>
+					<td>
+						<a :href="`article/detail?id=${item.id}`" x-text="item.title||'[空白标题]'"></a>
+						<template x-if="item.isDraft">
+							<span>[草稿]</span>
+						</template>
+					</td>
+					<td>
+						
+						<template x-if="item.categoryId>0">
+							<a :href="`category/detail?id=${item.categoryId}`" x-text="item.categoryName||'[未分类]'"></a>
+						</template>
+
+						<template x-if="item.categoryId==0">
+							<span x-text="item.categoryName||'[未分类]'"></span>
+						</template>
+					</td>
+					<td x-text="friendlyTime(item.createDate)"></td>
+					<td>
+						<a :href="`article/detail?id=${item.id}`">
+							<i class="fa fa-pencil"></i>
+						</a>
+
+						<a href="javascript:;" role="button" x-on:click="showModal = true;deleteId=item.id;">
+							<i class="fa fa-trash-o"></i>
+						</a>
+					</td>
+				</tr>
+			</template>
+			<template x-if="pageinfo.items.length==0 && !loading">
+				<tr>
+					<td align="center" colspan="10">还没有任何文章！</td>
+				</tr>
+			</template>
+			<template x-if="loading">
+				<tr>
+					<td colspan="10" style="text-align:center;">
+						<div class="loading-container">
+							<div class="loading"></div>
+						</div>
+					</td>
+				</tr>
+
+			</template>
+		</tbody>
+	</table>
+	<template >
+	<ul class="pagination">
+
+		<li>
+			<a x-on:click="loadItems(1)" href="javascript:;">&laquo;</a>
+		</li>
+
+		<template x-for="(page,index) in getVisiblePages()" :key="index">
+			<li :class="{ 'disabled': pageinfo.pageIndex === page }">
+				<a x-on:click="loadItems(page)" href="javascript:;" x-text="page"></a>
+			</li>
+		</template>
+
+		<li>
+			<a x-on:click="loadItems(pageinfo.totalPage)" href="javascript:;">&raquo;</a>
+		</li>
+	</ul>
+	</template>
+
+	<div x-show.transition.opacity="showModal" class="modal fade in" id="myModal" tabindex="-1" x-cloak>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button x-on:click="showModal = false" type="button" class="close" data-dismiss="modal">×</button>
+					<h3 id="myModalLabel">删除操作确认</h3>
+				</div>
+				<div class="modal-body">
+					<p class="error-text">
+						<i class="fa fa-warning modal-icon"></i>确认要删除这篇文章吗?
+						<br>操作后不可恢复.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button x-on:click="showModal = false" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button x-on:click="showModal = false; confirmAction()" class="btn btn-danger" data-dismiss="modal">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<partial name="_Footer" />
+</div>
+
+
+
+@section Scripts {
+	<script src="~/admin/js/article/index.js" asp-append-version="true"></script>
+}

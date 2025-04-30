@@ -1,0 +1,19 @@
+﻿<div class="max-wrapper">
+
+	<div>
+
+		<section class="single">
+			<h1 class="title">{{ Model.SinglePage.Title}}</h1>
+
+			<hr />
+
+			<div class="content">
+				{{ Model.SinglePage.Content | raw }}
+			</div>
+
+
+			<hr />
+			{% partial '_Comment' %}
+		</section>
+	</div>
+</div>

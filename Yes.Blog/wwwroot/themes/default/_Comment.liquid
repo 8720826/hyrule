@@ -1,0 +1,116 @@
+﻿<div id="comment">
+	<section class="">
+		<div class="">
+
+				<div class="">
+					<input type="hidden" name="targetId" value="{{ Model.Article.Id }}"/>
+					<textarea placeholder="写下你的评论..." name="content"></textarea>
+					<div id="comment-info">
+						<p class="comment-input">
+							<label for="author" class="required">
+								<i class="iconfont icon-aria-username"></i>
+							</label>
+							<input placeholder="（必填）昵称" type="text" name="nickName" class="text" required="" />
+						</p>
+						<p class="comment-input">
+							<label for="mail" class="required">
+								<i class="iconfont icon-aria-email"></i>
+							</label>
+							<input placeholder="（必填）邮箱" type="email" name="email" class="text" required=""/>
+						</p>
+						<p class="comment-input">
+							<label for="url">
+								<i class="iconfont icon-aria-link"></i>
+							</label>
+							<input type="url" name="url" class="text" placeholder="（选填）网站"/>
+						</p>
+					</div>
+					<div id="comment-error" class="text-danger"></div>
+					<div>
+						<div class="reply" style="display: flex;">
+							<div>
+								<span>Ctrl + Enter 发表</span>
+							</div>
+							<div>
+								<button type="button" id="createComment">
+									<span>发布</span>
+								</button>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			
+		</div>
+
+
+		{% if Model.Comments.Items.size > 0 %}
+		<h3 class="comment-count-title">
+			<div class="comment-count">
+				<span>评论</span>
+				<span>{{ Model.Comments.TotalItems }}</span>
+			</div>
+		</h3>
+		<div class="comments">
+			{% for comment in Model.Comments.Items %}
+			<div class="comments-item">
+
+				<div class="comment-box">
+					<div class="comment-info">
+						<span class="">{{ comment.NickName }}</span>
+						<a class="" href="{{ comment.Url }}" target="_blank" rel="noopener noreferrer">{{ comment.Url }}</a>
+						
+					</div>
+					<div class="comment-time">
+						<time datetime="{{ comment.CreateDate }}">{{ comment.CreateDate | format_date: "yyyy-MM-dd HH:mm" }}</time>
+					</div>
+					<div class="comment-content">{{ comment.Content }}</div>
+				</div>
+			</div>
+			{% endfor %}
+
+
+		</div>
+		{% endif %}
+	</section>
+</div>
+
+{% section styles %}
+<script src="/themes/default/js/axios.js"></script>
+{% endsection %}
+
+
+{% section scripts %}
+<script>
+	document.getElementById("createComment").addEventListener("click", function(){
+		var nickName = document.getElementsByName('nickName').value;
+		var email = document.getElementsByName('email').value;
+		var content = document.getElementsByName('content').value;
+		var url = document.getElementsByName('url').value;
+		var targetId = document.getElementsByName('targetId').value;
+		axios.post("/comments",{
+			targetId:targetId,
+			nickName:nickName,
+			email: email,
+			content: content,
+			url: url
+		}).catch(function (error) {
+			var errorMessage = "";
+            if (error.response) {
+                if (error.response.status == 422) { 
+                    const errors = Object.values(error.response.data.errors);
+                    const values = Array.from(new Set(errors.flat()));
+                    errorMessage = values.join('    ');
+                } else {
+                    errorMessage = error.response.data.detail;
+                }
+            } else {
+                errorMessage = "您的请求未能成功处理，可能是服务器开小差了！";
+            }
+			document.getElementById('comment-error').innerHTML = '<p>'+errorMessage+'</p>';
+		})
+	});
+
+
+</script>
+{% endsection %}

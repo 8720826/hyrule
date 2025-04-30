@@ -1,0 +1,99 @@
+﻿@page
+@model Yes.Blog.Areas.Admin.Pages.Tag.IndexModel
+@{
+}
+
+<template x-if="$store.errorMessage">
+	<div class="alert alert-danger" x-show="$store.errorMessage" x-transition x-text="$store.errorMessage"></div>
+</template>
+
+
+<div class="header">
+	<h1 class="page-title">
+		标签列表
+	</h1>
+	<ul class="breadcrumb">
+		<li>
+			<a asp-page="/Index">管理中心</a>
+		</li>
+		<li class="active">标签列表</li>
+	</ul>
+
+</div>
+<div class="main-content" x-data="data">
+
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>编号</th>
+				<th>标签名</th>
+				<th>缩略名</th>
+				<th>发布时间</th>
+				<th style="width: 65px;"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<template x-for="(item,index) in pageinfo.items" :key="index">
+				<tr>
+					<td x-text="item.id"></td>
+					<td>
+						<a :href="`tag/detail?id=${item.id}`" x-text="item.name"></a>
+					</td>
+					<td>
+						<span x-text="item.slug"></span>
+					</td>
+					<td x-text="friendlyTime(item.createDate)"></td>
+					<td>
+						<a :href="`tag/detail?id=${item.id}`">
+							<i class="fa fa-pencil"></i>
+						</a>
+					</td>
+				</tr>
+			</template>
+			<template x-if="pageinfo.items.length==0 && !loading">
+				<tr>
+					<td align="center" colspan="10">还没有任何标签！</td>
+				</tr>
+			</template>
+			<template x-if="loading">
+				<tr>
+					<td colspan="10" style="text-align:center;">
+						<div class="loading-container">
+							<div class="loading"></div>
+						</div>
+					</td>
+				</tr>
+
+			</template>
+		</tbody>
+	</table>
+	<template>
+		<ul class="pagination">
+
+			<li>
+				<a x-on:click="loadItems(1)" href="javascript:;">&laquo;</a>
+			</li>
+
+			<template x-for="(page,index) in getVisiblePages()" :key="index">
+				<li :class="{ 'disabled': pageinfo.pageIndex === page }">
+					<a x-on:click="loadItems(page)" href="javascript:;" x-text="page"></a>
+				</li>
+			</template>
+
+			<li>
+				<a x-on:click="loadItems(pageinfo.totalPage)" href="javascript:;">&raquo;</a>
+			</li>
+		</ul>
+	</template>
+
+
+
+	<partial name="_Footer" />
+</div>
+
+
+
+@section Scripts {
+	<script src="~/admin/js/tag/index.js" asp-append-version="true"></script>
+}

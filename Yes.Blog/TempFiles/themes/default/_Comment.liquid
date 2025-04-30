@@ -1,0 +1,97 @@
+﻿<div id="comment">
+	<section class="">
+		<div class="">
+			<form id="search" method="post" action="/comments" role="search">
+				<div class="">
+					<input type="hidden" name="targetId" value="{{ Model.Article.Id }}"/>
+					<textarea placeholder="写下你的评论..." name="content"></textarea>
+					<div id="comment-info">
+						<p class="comment-input">
+							<label for="author" class="required">
+								<i class="iconfont icon-aria-username"></i>
+							</label>
+							<input placeholder="（必填）昵称" type="text" name="nickName" class="text" required="" />
+				</p>
+						<p class="comment-input">
+							<label for="mail" class="required">
+								<i class="iconfont icon-aria-email"></i>
+							</label>
+							<input placeholder="（必填）邮箱" type="email" name="email" class="text" required=""/>
+				</p>
+						<p class="comment-input">
+							<label for="url">
+								<i class="iconfont icon-aria-link"></i>
+							</label>
+							<input type="url" name="url" class="text" placeholder="（选填）网站"/>
+				</p>
+					</div>
+					<div>
+						<div class="reply" style="display: flex;">
+							<div>
+								<span>Ctrl + Enter 发表</span>
+							</div>
+							<div>
+								<button type="submit">
+									<span>发布</span>
+								</button>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<h3 class="comment-count-title">
+			<div class="comment-count">
+				<span>评论</span>
+				<span>3</span>
+			</div>
+		</h3>
+		<div class="comments">
+			<div class="comments-item">
+
+				<div class="comment-box">
+					<div class="comment-info">
+						<span class="">某某某</span>
+						<a class="" href="/u/7e73b69d5111" target="_blank" rel="noopener noreferrer">https://baidu.com</a>
+						
+					</div>
+					<div class="comment-time">
+						<time datetime="2024-09-28T11:04:10.000Z">2024-09-28 19:04</time>
+					</div>
+					<div class="comment-content">遗憾是常有的😭</div>
+				</div>
+			</div>
+
+
+			<div class="comments-item">
+
+				<div class="comment-box">
+					<div class="comment-info">
+						<span class="">广西</span>
+						<a class="" href="/u/7e73b69d5111" target="_blank" rel="noopener noreferrer">https://baidu.com</a>
+					</div>
+					<div class="comment-time">
+						<time datetime="2024-09-28T11:04:10.000Z">2024-09-28 19:04</time>
+					</div>
+					<div class="comment-content">遗憾是常有的😭</div>
+				</div>
+			</div>
+
+			<div class="comments-item">
+
+				<div class="comment-box">
+					<div class="comment-info">
+						<span class="">自治区</span>
+						<a class="" href="/u/7e73b69d5111" target="_blank" rel="noopener noreferrer">https://baidu.com</a>
+					</div>
+					<div class="comment-time">
+						<time datetime="2024-09-28T11:04:10.000Z">2024-09-28 19:04</time>
+					</div>
+					<div class="comment-content">遗憾是常有的😭</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>

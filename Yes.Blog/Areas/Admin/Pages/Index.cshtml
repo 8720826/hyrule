@@ -1,0 +1,126 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+
+
+
+
+<div class="header">
+
+    <h1 class="page-title">控制台</h1>
+    <ul class="breadcrumb">
+        <li><a asp-page="/Index">管理中心</a> </li>
+        <li class="active">控制台</li>
+    </ul>
+
+</div>
+<div class="main-content" x-data="data">
+
+
+
+    <div class="row">
+
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            最新文章
+                        </div>
+                        <ul class="list-group">
+                            <template x-for="(article,index) in articles" :key="index">
+                                <li class="list-group-item">
+                                    <template x-if="article.isDraft">
+                                        <span>[草稿]</span>
+                                    </template>
+                                    <a :href="`/admin/article/detail?id=${article.id}`" x-text="article.title"></a>
+                                    <span class="pull-right label label-default" x-text="friendlyTime(article.createDate)"></span>
+                                </li>
+                            </template>
+                            <template x-if="articles.length==0">
+                                <li class="list-group-item">
+                                    <p>还没有文章。</p>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            最近评论
+                        </div>
+                        <ul class="list-group">
+                            <template x-for="(comment,index) in comments" :key="index">
+                                <li class="list-group-item">
+                                    <a :href="`/admin/article/detail?id=${comment.articleId}`" x-text="comment.content"></a>
+                                    <span class="pull-right label label-default" x-text="friendlyTime(comment.createDate)"></span>
+                                </li>
+                            </template>
+                            <template x-if="comments.length==0">
+                                <li class="list-group-item">
+                                    <p>还没有评论。</p>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+        <div class="col-md-3">
+
+
+            <div class="panel panel-default fadeInDown animation-delay2">
+                <div class="panel-heading">
+                    网站概要
+                </div>
+                <div class="panel-body">
+
+                    <div class="col-md-4 col-sm-4 text-center">
+                        <span class="center-block">文章数</span>
+                        <strong x-text="stats.articleCount"></strong>
+                    </div>
+                    <div class="col-md-4 col-sm-4 text-center">
+                        <span class="center-block">分类数</span>
+                        <strong x-text="stats.categoryCount"></strong>
+                    </div>
+                    <div class="col-md-4 col-sm-4 text-center">
+                        <span class="center-block">评论数</span>
+                        <strong x-text="stats.commentCount"></strong>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="panel panel-default fadeInDown animation-delay2">
+                <div class="panel-heading">
+                    操作日志
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <p>还没有记录。</p>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <partial name ="_Footer" />
+</div>
+
+@section Scripts {
+    <script src="~/admin/js/index.js" asp-append-version="true"></script>
+}

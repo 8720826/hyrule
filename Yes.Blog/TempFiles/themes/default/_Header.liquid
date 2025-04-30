@@ -1,0 +1,16 @@
+﻿<header class="header-wrapper">
+	<div class="header">
+		<a class="site-title" href="/">{{ Model.Blog.Name }}</a>
+
+		<nav class="menu">
+			{% for page in Model.SinglePages %}
+			<div class="menu-item">
+				<a href="{{ page.Link }}">{{ page.Title }}</a>
+			</div>
+			{% endfor %}
+
+		</nav>
+
+
+	</div>
+</header>

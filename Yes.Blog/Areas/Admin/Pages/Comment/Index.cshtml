@@ -1,0 +1,148 @@
+﻿@page
+@model Yes.Blog.Areas.Admin.Pages.Comment.IndexModel
+@{
+}
+
+
+<template x-if="$store.errorMessage">
+	<div class="alert alert-danger" x-show="$store.errorMessage" x-transition x-text="$store.errorMessage"></div>
+</template>
+
+
+<div class="header">
+	<h1 class="page-title">
+		评论列表
+	</h1>
+	<ul class="breadcrumb">
+		<li>
+			<a asp-page="/Index">管理中心</a>
+		</li>
+		<li class="active">评论列表</li>
+	</ul>
+
+</div>
+<div class="main-content" x-data="data">
+
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>编号</th>
+				<th>评论内容</th>
+				<th>邮箱</th>
+				<th>网址</th>
+				<th>文章标题</th>
+				<th>状态</th>
+				<th>发布时间</th>
+				<th style="width: 65px;"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<template x-for="(item,index) in pageinfo.items" :key="index">
+				<tr>
+					<td x-text="item.id"></td>
+					<td>
+						<span x-text="item.content"></span>
+					</td>
+					<td>
+						<span x-text="item.email"></span>
+					</td>
+					<td>
+						<span x-text="item.url"></span>
+					</td>
+					<td>
+						<a :href="`article/detail?id=${item.articleId}`" x-text="item.title||'[空白标题]'"></a>
+					</td>
+					<td>
+						<template x-if="item.hasVerified">
+							<span class="bg-success">已审核</span>
+						</template>
+
+						<template x-if="!item.hasVerified">
+							<span class="bg-warning">待审核</span>
+						</template>
+					</td>
+					<td x-text="friendlyTime(item.createDate)"></td>
+					<td>
+						<template x-if="!item.hasVerified">
+							<a href="javascript:;" role="button" x-on:click="showModal(item.id,'display');">
+								<i class="fa fa-check"></i>
+							</a>
+						</template>
+						<template x-if="item.hasVerified">
+							<a href="javascript:;" role="button" x-on:click="showModal(item.id,'hide');">
+								<i class="fa fa-times"></i>
+							</a>
+						</template>
+
+
+						<a href="javascript:;" role="button" x-on:click="showModal(item.id,'delete');">
+							<i class="fa fa-trash-o"></i>
+						</a>
+					</td>
+				</tr>
+			</template>
+			<template x-if="pageinfo.items.length==0 && !loading">
+				<tr>
+					<td align="center" colspan="10">还没有任何评论！</td>
+				</tr>
+			</template>
+			<template x-if="loading">
+				<tr>
+					<td colspan="10" style="text-align:center;">
+						<div class="loading-container">
+							<div class="loading"></div>
+						</div>
+					</td>
+				</tr>
+
+			</template>
+		</tbody>
+	</table>
+	<template>
+		<ul class="pagination">
+
+			<li>
+				<a x-on:click="loadItems(1)" href="javascript:;">&laquo;</a>
+			</li>
+
+			<template x-for="(page,index) in getVisiblePages()" :key="index">
+				<li :class="{ 'disabled': pageinfo.pageIndex === page }">
+					<a x-on:click="loadItems(page)" href="javascript:;" x-text="page"></a>
+				</li>
+			</template>
+
+			<li>
+				<a x-on:click="loadItems(pageinfo.totalPage)" href="javascript:;">&raquo;</a>
+			</li>
+		</ul>
+	</template>
+
+
+	<div x-show.transition.opacity="actionName!=''" class="modal fade in" id="myModal" tabindex="-1" x-cloak>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button x-on:click="cancelModal();" type="button" class="close" data-dismiss="modal">×</button>
+					<h3 id="myModalLabel">操作确认</h3>
+				</div>
+				<div class="modal-body">
+					<p class="error-text">
+						<i class="fa fa-warning modal-icon"></i>确认要<span x-text="actionName"></span>这条评论吗?
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button x-on:click="cancelModal();" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button x-on:click="confirmAction();" class="btn btn-danger" data-dismiss="modal">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<partial name="_Footer" />
+</div>
+
+
+
+@section Scripts {
+	<script src="~/admin/js/comment/index.js" asp-append-version="true"></script>
+}

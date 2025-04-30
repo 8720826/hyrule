@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Admins\Articles\GetArticlesQueryHandler.cs~RF1f30e3a7.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
+    <PackageReference Include="Qiniu" Version="8.7.0" />
+	<PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Yes.Domain\Yes.Domain.csproj" />
+    <ProjectReference Include="..\Yes.Infrastructure\Yes.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

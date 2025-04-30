@@ -1,0 +1,12 @@
+﻿<div class="side-tags">
+	<h2>标签</h2>
+	<hr />
+
+	<ul>
+		{% for tag in Model.Tags %}
+		<li>
+			<a class="tags" href="{{ tag.Link }}">{{ tag.Name }}</a>
+		</li>
+		{% endfor %}
+	</ul>
+</div>

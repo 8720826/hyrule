@@ -1,0 +1,229 @@
+﻿@page
+@model Yes.Blog.Areas.Admin.Pages.Configuration.IndexModel
+@{
+}
+<template x-data x-if="$store.errorMessage||1">
+
+    <div class="alert alert-danger floating-div" x-show="$store.errorMessage" x-transition x-on:dblclick.prevent="$store.errorMessage=''">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" x-on:click.prevent="$store.errorMessage=''"><span aria-hidden="true">&times;</span></button>
+        <p x-html="$store.errorMessage"></p>
+    </div>
+</template>
+
+<div class="header">
+    <div class="stats">
+    </div>
+
+
+    <h1 class="page-title">基本设置</h1>
+    <ul class="breadcrumb">
+        <li>
+            <a asp-page="/Index">管理中心</a>
+        </li>
+        <li class="active">基本设置</li>
+    </ul>
+</div>
+
+<div class="main-content" x-data="data">
+
+    <ul class="nav nav-tabs">
+        <li x-bind:class="tab=='site'?`active`:``"><a href="javascript:;" x-on:click="tab='site'">站点设置</a></li>
+        <li x-bind:class="tab=='display'?`active`:``"><a href="javascript:;" x-on:click="tab='display'">显示设置</a></li>
+        <li x-bind:class="tab=='link'?`active`:``"><a href="javascript:;" x-on:click="tab='link'">固定链接设置</a></li>
+        <li x-bind:class="tab=='storage'?`active`:``"><a href="javascript:;" x-on:click="tab='storage'">文件存储</a></li>
+    </ul>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="row">
+                <div class="col-lg-6" x-show="tab=='site'">
+
+                    <div class="form-group">
+                        <label>站点名称</label>
+                        <input type="text" x-model="config.name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>站点网址</label>
+                        <input type="text" x-model="config.url" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>站点关键字</label>
+                        <input type="text" x-model="config.keywords" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>站点描述</label>
+                        <textarea x-model="config.description" rows="3" class="form-control"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>站点标志</label>
+                        <div id="img-container">
+                            <template x-if="config.logo">
+                                <div class="img-thumb img-item">
+                                    <img class="thumb-icon" :src="config.logo" />
+                                    <a href="javascript:;" class="img-remove" x-on:click="config.logo='';tempfile=null">x</a>
+                                </div>
+                            </template>
+                            <template x-if="!config.logo">
+                                <div class="img-up-add  img-item">
+                                    <span class="img-add-icon" x-on:click="addIcon()">+</span>
+                                </div>
+                            </template>
+                            <input type="hidden" x-model="config.logo">
+                            <input type="file" name="files" id="img-file-input" x-model="tempfile" x-on:change="handleFileChange($event.target.files[0],function(url){ config.logo=url; })">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>ICP备案号</label>
+                        <input type="text" x-model="config.beiAn" class="form-control">
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label>统计/客服代码</label>
+                        <textarea x-model="config.script" rows="3" class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-lg-6" x-show="tab=='display'">
+
+                    <div class="form-group">
+                        <label>首页展示文章数量</label>
+                        <input type="text" class="form-control" x-model="config.pageSizeOfHomepage">
+                    </div>
+
+                    <div class="form-group">
+                        <label>每页文章数目</label>
+                        <input type="text" class="form-control" x-model="config.pageSizeOfListpage">
+                    </div>
+                </div>
+
+                <div class="col-lg-9" x-show="tab=='link'">
+
+                    <div class="form-group">
+                        <label>自定义文章路径</label>
+                        <input type="text" class="form-control" x-model="config.articleRoute">
+                        <ul>
+                            <li>
+                                <input type="radio" name="articleroute" id="articleroute_0" x-on:click="config.articleRoute='/post/{p_id}/'">
+                                <label for="articleroute_0">默认风格 /post/{p_id}/</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="articleroute" id="articleroute_1" x-on:click="config.articleRoute='/post/{p_slug}.html'">
+                                <label for="articleroute_1">wordpress风格 /post/{p_slug}.html</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="articleroute" id="articleroute_2" x-on:click="config.articleRoute='/{year}/{month}/{day}/{p_slug}.html'">
+                                <label for="articleroute_2">按日期归档 /{year}/{month}/{day}/{p_slug}.html</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="articleroute" id="articleroute_3" x-on:click="config.articleRoute='/{c_slug}/{p_slug}.html'">
+                                <label for="articleroute_3">按分类归档 /{c_slug}/{p_slug}.html</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="articleroute" id="articleroute_4" x-on:click="config.articleRoute=defaultArticleRoute">
+                                <label for="articleroute_4">
+                                    重置为 <span x-text="defaultArticleRoute||'空'"></span>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="description">
+                            <p>可用参数: {p_id} 日志/单页 ID, {p_slug} 日志/单页缩略名, {c_slug} 分类缩略名, {c_id} 分类ID , {year} 年, {month} 月, {day} 日</p>
+                            <p>选择一种合适的文章静态路径风格, 使得你的网站链接更加友好. 一旦你选择了某种链接风格请不要轻易修改它.</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>独立页面路径</label>
+                        <input type="text" class="form-control" x-model="config.pageRoute">
+                        <div class="description">
+                            <p>可用参数: {p_id} 页面 ID, {p_slug} 页面缩略名，默认为 /page/{p_id}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>分类页路径</label>
+                        <input type="text" class="form-control" x-model="config.categoryRoute">
+                        <div class="description">
+                            <p>
+                                可用参数: {c_id} 分类 ID, {c_slug} 分类缩略名，默认为 /cate/{c_id}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>搜索页路径</label>
+                        <input type="text" class="form-control" x-model="config.searchRoute">
+                        <div class="description">
+                            <p>
+                                可用参数: {keyword} 搜索关键词，默认为 /search/{keyword}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>标签页路径</label>
+                        <input type="text" class="form-control" x-model="config.tagRoute">
+                        <div class="description">
+                            <p>
+                                可用参数: {t_id} 标签ID， {t_slug} 标签缩略名，默认为 /tag/{t_id}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6" x-show="tab=='storage'">
+
+                    <div class="form-group">
+                        <label>文件服务类型</label>
+                        <select class="form-control" x-model="config.storage.storageType">
+                            <option value="Local">本地存储</option>
+                            <option value="Qiniu">七牛云服务</option>
+                        </select>
+                    </div>
+
+
+                    <div x-show="config.storage.storageType=='Qiniu'">
+                        <div class="form-group">
+                            <label>AccessKey</label>
+                            <input type="text" class="form-control" x-model="config.storage.qiniu.accessKey" :placeholder="config.storage.qiniu.maskedAccessKey">
+                        </div>
+
+                        <div class="form-group">
+                            <label>SecretKey</label>
+                            <input type="text" class="form-control" x-model="config.storage.qiniu.secretKey" :placeholder="config.storage.qiniu.maskedSecretKey">
+                        </div>
+
+                        <div class="form-group">
+                            <label>存储桶名称</label>
+                            <input type="text" class="form-control" x-model="config.storage.qiniu.bucket">
+                        </div>
+
+                        <div class="form-group">
+                            <label>域名</label>
+                            <input type="text" class="form-control" x-model="config.storage.qiniu.domain">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="btn-toolbar list-toolbar">
+                <button class="btn btn-primary" x-on:click="save()"><i class="fa fa-save"></i> 保存</button>
+            </div>
+        </div>
+    </div>
+
+
+    <partial name="_Footer" />
+</div>
+
+
+@section Scripts {
+    <script src="~/admin/js/qiniu.min.js" asp-append-version="true"></script>
+    <script src="~/admin/js/configuration/index.js" asp-append-version="true"></script>
+}
