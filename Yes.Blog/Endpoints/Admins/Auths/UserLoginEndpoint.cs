@@ -1,6 +1,6 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Auths
 {
-    public class UserLoginEndpoint : AdminEndpointScheme, IEndpoint
+    public class UserLoginEndpoint : AuthEndpointScheme, IEndpoint
 	{
 
 		public void Map(IEndpointRouteBuilder app) => app.MapPost("/login", Handle).WithRequestValidation<Request>();

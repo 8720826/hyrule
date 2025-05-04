@@ -1,8 +1,6 @@
-﻿
-
-namespace Yes.Blog.Endpoints.Admins.Themes
+﻿namespace Yes.Blog.Endpoints.Admins.Themes
 {
-    public class GetThemesEndpoint : AdminEndpointScheme, IEndpoint
+    public class GetThemesEndpoint : ThemeEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapGet("/themes", Handle);
 

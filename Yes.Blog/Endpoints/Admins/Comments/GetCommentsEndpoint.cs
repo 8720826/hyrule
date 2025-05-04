@@ -1,6 +1,6 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Comments
 {
-    public class GetCommentsEndpoint : AdminEndpointScheme, IEndpoint
+    public class GetCommentsEndpoint : CommentEndpointScheme, IEndpoint
     {
         public void Map(IEndpointRouteBuilder app) => app.MapGet("/comments", Handle);
 

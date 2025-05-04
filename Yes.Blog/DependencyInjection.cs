@@ -1,4 +1,6 @@
-﻿namespace Yes.Blog
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Yes.Blog
 {
     public static class DependencyInjection
     {
@@ -25,6 +27,27 @@
             services.AddHttpContextAccessor();
 
             services.AddUserAuthentication();
+
+            services.AddAuthorization();
+
+            builder.Services.AddEndpointsApiExplorer();
+
+            builder.Services.AddOpenApi(options =>
+            {
+                options.AddDocumentTransformer((document, context, cancellationToken) =>
+                {
+                    document.Info = new()
+                    {
+                        Title = "API",
+                        Version = "V1",
+                        Description = ""
+                    };
+
+
+                    return Task.CompletedTask;
+                });
+
+            });
 
             return services;
         }
@@ -202,10 +225,13 @@
             var endpoints = app.Services.GetRequiredService<IEnumerable<IEndpoint>>().OrderByDescending(x => x.Priority);
             foreach (var route in endpoints)
             {
-                var routeGroup = app.MapGroup($"/{route.SchemeName}");
+                var routeGroup = app.MapGroup($"/{route.Prefix}").WithTags(route.Tags);
                 route.Map(routeGroup);
 
             }
+
+
+
             return app;
         }
 

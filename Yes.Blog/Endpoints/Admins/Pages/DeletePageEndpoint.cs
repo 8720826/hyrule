@@ -1,6 +1,6 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Pages
 {
-    public class DeletePageEndpoint : AdminEndpointScheme, IEndpoint
+    public class DeletePageEndpoint : PageEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapDelete("/pages", Handle);
 

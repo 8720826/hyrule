@@ -1,6 +1,6 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Pages
 {
-    public class GetPageEndpoint : AdminEndpointScheme, IEndpoint
+    public class GetPageEndpoint : PageEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapGet("/pages/{id}", Handle);
 

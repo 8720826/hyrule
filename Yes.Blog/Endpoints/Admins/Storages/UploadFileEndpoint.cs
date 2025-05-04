@@ -1,8 +1,8 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Storages
 {
-    public class UploadFileEndpoint : AdminEndpointScheme, IEndpoint
+    public class UploadFileEndpoint : StorageEndpointScheme, IEndpoint
 	{
-		public void Map(IEndpointRouteBuilder app) => app.MapPost("/Storages/upload", Handle).DisableAntiforgery();
+		public void Map(IEndpointRouteBuilder app) => app.MapPost("/storages/upload", Handle).DisableAntiforgery();
 		public record Request(
 			IFormFile File
 		);

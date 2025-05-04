@@ -1,6 +1,6 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Categories
 {
-    public class DeleteCategoryEndpoint : AdminEndpointScheme, IEndpoint
+    public class DeleteCategoryEndpoint : CategoryEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapDelete("/categories", Handle);
 

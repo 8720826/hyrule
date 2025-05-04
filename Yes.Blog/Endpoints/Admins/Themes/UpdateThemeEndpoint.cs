@@ -1,14 +1,15 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Themes
 {
-    public class UpdateThemeEndpoint : AdminEndpointScheme, IEndpoint
+    public class UpdateThemeEndpoint : ThemeEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapPut("/themes", Handle).WithRequestValidation<Request>();
 
-		public record Request(
+        [Scalar.AspNetCore.ExcludeFromApiReference]
+        internal record Request(
 			string Theme
 		);
 
-		public class RequestValidator : AbstractValidator<Request>
+        internal class RequestValidator : AbstractValidator<Request>
 		{
 			public RequestValidator()
 			{

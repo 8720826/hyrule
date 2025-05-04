@@ -1,8 +1,6 @@
-﻿
-
-namespace Yes.Blog.Endpoints.Admins.Tags
+﻿namespace Yes.Blog.Endpoints.Admins.Tags
 {
-    public class UpdateTagEndpoint : AdminEndpointScheme, IEndpoint
+    public class UpdateTagEndpoint : TagEndpointScheme, IEndpoint
     {
         public void Map(IEndpointRouteBuilder app) => app.MapPut("/tags", Handle).WithRequestValidation<Request>();
 

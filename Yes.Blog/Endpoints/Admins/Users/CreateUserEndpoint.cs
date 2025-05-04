@@ -1,8 +1,6 @@
-﻿
-
-namespace Yes.Blog.Endpoints.Admins.Users
+﻿namespace Yes.Blog.Endpoints.Admins.Users
 {
-    public class CreateUserEndpoint : AdminEndpointScheme, IEndpoint
+    public class CreateUserEndpoint : UserEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapPost("/users", Handle).WithRequestValidation<Request>();
 

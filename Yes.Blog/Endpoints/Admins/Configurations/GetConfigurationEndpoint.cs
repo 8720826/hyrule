@@ -1,6 +1,6 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Configurations
 {
-    public class GetConfigurationEndpoint : AdminEndpointScheme, IEndpoint
+    public class GetConfigurationEndpoint : ConfigurationEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapGet("/configuration", Handle);
 

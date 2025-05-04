@@ -1,10 +1,11 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Articles
 {
-    public class CreateArticleEndpoint : AdminEndpointScheme, IEndpoint
+    public class CreateArticleEndpoint : ArticleEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapPost("/articles", Handle).WithRequestValidation<Request>();
 
-		public record Request(
+
+        internal record Request(
 			int CategoryId,
 			string Title,
 			string? Slug,
@@ -15,7 +16,7 @@
 			bool IsDraft
 		);
 
-		public class RequestValidator : AbstractValidator<Request>
+        internal class RequestValidator : AbstractValidator<Request>
 		{
 			public RequestValidator()
 			{

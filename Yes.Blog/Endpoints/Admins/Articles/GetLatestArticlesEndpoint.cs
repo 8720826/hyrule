@@ -1,10 +1,8 @@
-﻿
-
-namespace Yes.Blog.Endpoints.Admins.Articles
+﻿namespace Yes.Blog.Endpoints.Admins.Articles
 {
-    public class GetLatestArticlesEndpoint : AdminEndpointScheme, IEndpoint
+    public class GetLatestArticlesEndpoint : ArticleEndpointScheme, IEndpoint
 	{
-		public void Map(IEndpointRouteBuilder app) => app.MapGet("/articles/Latest", Handle);
+		public void Map(IEndpointRouteBuilder app) => app.MapGet("/articles/latest", Handle);
 
 
 

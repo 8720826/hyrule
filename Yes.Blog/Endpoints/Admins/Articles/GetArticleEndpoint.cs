@@ -1,8 +1,6 @@
-﻿
-
-namespace Yes.Blog.Endpoints.Admins.Articles
+﻿namespace Yes.Blog.Endpoints.Admins.Articles
 {
-    public class GetArticleEndpoint : AdminEndpointScheme, IEndpoint
+    public class GetArticleEndpoint : ArticleEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapGet("/articles/{id}", Handle);
 

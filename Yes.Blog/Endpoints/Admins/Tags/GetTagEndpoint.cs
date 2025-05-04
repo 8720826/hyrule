@@ -1,6 +1,6 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Tags
 {
-    public class GetTagEndpoint : AdminEndpointScheme, IEndpoint
+    public class GetTagEndpoint : TagEndpointScheme, IEndpoint
     {
         public void Map(IEndpointRouteBuilder app) => app.MapGet("/tags/{id}", Handle);
 

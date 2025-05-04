@@ -1,8 +1,8 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Statistics
 {
-    public class GetStatsEndpoint : AdminEndpointScheme, IEndpoint
+    public class GetStatsEndpoint : StatEndpointScheme, IEndpoint
 	{
-		public void Map(IEndpointRouteBuilder app) => app.MapGet("/Stats", Handle);
+		public void Map(IEndpointRouteBuilder app) => app.MapGet("/stats", Handle);
 
 
 		private async Task<IResult> Handle(IMediator mediator, IMapper mapper, CancellationToken cancellationToken)

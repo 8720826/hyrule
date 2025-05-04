@@ -1,9 +1,9 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Auths
 {
-    public class UserLogoutEndpoint : AdminEndpointScheme, IEndpoint
+    public class UserLogoutEndpoint : AuthEndpointScheme, IEndpoint
 	{
 
-		public void Map(IEndpointRouteBuilder app) => app.MapPost("/Logout", Handle);
+		public void Map(IEndpointRouteBuilder app) => app.MapPost("/logout", Handle);
 
 
 		private async Task<IResult> Handle(IMediator mediator, IMapper mapper, HttpContext context, CancellationToken cancellationToken)

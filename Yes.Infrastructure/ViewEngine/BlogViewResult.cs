@@ -1,6 +1,6 @@
 ﻿namespace Yes.Infrastructure.ViewEngine
 {
-    public class BlogViewResult : IResult
+    public class BlogViewResult : Microsoft.AspNetCore.Http.IResult
     {
         private readonly string _theme;
         private readonly string _viewName;

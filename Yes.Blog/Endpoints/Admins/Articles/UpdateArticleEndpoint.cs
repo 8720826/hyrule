@@ -1,6 +1,6 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Articles
 {
-    public class UpdateArticleEndpoint : AdminEndpointScheme, IEndpoint
+    public class UpdateArticleEndpoint : ArticleEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapPut("/articles", Handle).WithRequestValidation<Request>();
 

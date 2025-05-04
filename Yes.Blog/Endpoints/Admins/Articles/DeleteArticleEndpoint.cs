@@ -1,14 +1,10 @@
-﻿
-
-
-
-namespace Yes.Blog.Endpoints.Admins.Articles
+﻿namespace Yes.Blog.Endpoints.Admins.Articles
 {
-    public class DeleteArticleEndpoint : AdminEndpointScheme, IEndpoint
+    public class DeleteArticleEndpoint : ArticleEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapDelete("/articles", Handle);
 
-		public record Request(int Id);
+        internal record Request(int Id);
 
 
 

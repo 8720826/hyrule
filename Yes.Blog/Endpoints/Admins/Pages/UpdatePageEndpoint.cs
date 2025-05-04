@@ -1,6 +1,6 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Pages
 {
-    public class UpdatePageEndpoint : AdminEndpointScheme, IEndpoint
+    public class UpdatePageEndpoint : PageEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapPut("/pages", Handle).WithRequestValidation<Request>();
 

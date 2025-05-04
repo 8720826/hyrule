@@ -1,6 +1,6 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Configurations
 {
-    public class UpdateConfigurationEndpoint : AdminEndpointScheme, IEndpoint
+    public class UpdateConfigurationEndpoint : ConfigurationEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapPut("/configuration", Handle).WithRequestValidation<Request>();
 

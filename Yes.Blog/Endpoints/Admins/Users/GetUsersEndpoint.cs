@@ -1,6 +1,6 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Users
 {
-    public class GetUsersEndpoint : AdminEndpointScheme, IEndpoint
+    public class GetUsersEndpoint : UserEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapGet("/users", Handle);
 

@@ -1,6 +1,6 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Users
 {
-    public class UpdatePasswordEndpoint : AdminEndpointScheme, IEndpoint
+    public class UpdatePasswordEndpoint : UserEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapPut("/users/Password", Handle).WithRequestValidation<Request>();
 

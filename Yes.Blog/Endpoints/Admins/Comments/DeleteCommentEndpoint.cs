@@ -1,8 +1,6 @@
-﻿
-
-namespace Yes.Blog.Endpoints.Admins.Comments
+﻿namespace Yes.Blog.Endpoints.Admins.Comments
 {
-    public class DeleteCommentEndpoint : AdminEndpointScheme, IEndpoint
+    public class DeleteCommentEndpoint : CommentEndpointScheme, IEndpoint
     {
         public void Map(IEndpointRouteBuilder app) => app.MapDelete("/comments", Handle);
 

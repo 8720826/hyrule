@@ -3,6 +3,8 @@
 	public class AdminEndpointScheme
 	{
 		public int Priority { get; set; } = 3;
-		public string SchemeName { get; set; } = "admin/api";
-	}
+		public string Prefix { get; set; } = "admin/api";
+
+        public string[] Tags { get; set; } = new[] { "Blog" };
+    }
 }

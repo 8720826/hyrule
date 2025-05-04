@@ -1,8 +1,6 @@
-﻿
-
-namespace Yes.Blog.Endpoints.Admins.Categories
+﻿namespace Yes.Blog.Endpoints.Admins.Categories
 {
-    public class CreateCategoryEndpoint : AdminEndpointScheme, IEndpoint
+    public class CreateCategoryEndpoint : CategoryEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapPost("/categories", Handle).WithRequestValidation<Request>();
 

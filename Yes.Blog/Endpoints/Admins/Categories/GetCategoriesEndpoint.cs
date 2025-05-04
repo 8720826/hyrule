@@ -1,8 +1,6 @@
-﻿
-
-namespace Yes.Blog.Endpoints.Admins.Categories
+﻿namespace Yes.Blog.Endpoints.Admins.Categories
 {
-    public class GetCategoriesEndpoint : AdminEndpointScheme, IEndpoint
+    public class GetCategoriesEndpoint : CategoryEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapGet("/categories", Handle);
 

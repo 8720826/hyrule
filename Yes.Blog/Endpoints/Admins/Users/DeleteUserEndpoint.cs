@@ -1,6 +1,6 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Users
 {
-    public class DeleteUserEndpoint : AdminEndpointScheme, IEndpoint
+    public class DeleteUserEndpoint : UserEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapDelete("/users", Handle);
 

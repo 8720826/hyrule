@@ -42,7 +42,9 @@
   <ItemGroup>
 	<PackageReference Include="FluentValidation" Version="11.11.0" />
 	<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
+	<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
 	<PackageReference Include="MinimalApis.LiquidViews" Version="2.16.0" />
+	<PackageReference Include="Scalar.AspNetCore" Version="2.2.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -294,6 +296,10 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Endpoints\Admins\Installs\" />
   </ItemGroup>
 
 </Project>

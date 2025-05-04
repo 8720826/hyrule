@@ -3,6 +3,10 @@
 	public class BlogEndpointScheme
 	{
 		public int Priority { get; set; } = 0;
-		public string SchemeName { get; set; } = "";
-	}
+
+		public string Prefix { get; set; } = "";
+
+
+        public string[] Tags { get; set; } = new[] { "Blog" };
+    }
 }

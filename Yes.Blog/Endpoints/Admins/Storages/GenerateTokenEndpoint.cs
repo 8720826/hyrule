@@ -1,10 +1,8 @@
-﻿
-
-namespace Yes.Blog.Endpoints.Admins.Storages
+﻿namespace Yes.Blog.Endpoints.Admins.Storages
 {
-    public class GenerateTokenEndpoint : AdminEndpointScheme, IEndpoint
+    public class GenerateTokenEndpoint : StorageEndpointScheme, IEndpoint
 	{
-		public void Map(IEndpointRouteBuilder app) => app.MapPost("/Storages/token", Handle);
+		public void Map(IEndpointRouteBuilder app) => app.MapPost("/storages/token", Handle);
 
 		private async Task<IResult> Handle(
 			IMediator mediator,

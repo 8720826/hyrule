@@ -1,6 +1,6 @@
 ﻿namespace Yes.Blog.Endpoints.Admins.Users
 {
-    public class UpdateUserEndpoint : AdminEndpointScheme, IEndpoint
+    public class UpdateUserEndpoint : UserEndpointScheme, IEndpoint
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapPut("/users", Handle).WithRequestValidation<Request>();
 

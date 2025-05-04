@@ -5,9 +5,12 @@
 		int Priority { get; }
 
 
-		string SchemeName { get; }
+		string Prefix { get; }
 
 		void Map(IEndpointRouteBuilder app);
-	}
+
+        string[] Tags { get; }
+
+    }
 
 }

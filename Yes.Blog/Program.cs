@@ -1,3 +1,8 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
+using Scalar.AspNetCore;
+
 namespace Yes.Blog
 {
     public class Program
@@ -10,8 +15,6 @@ namespace Yes.Blog
             builder.Services.RegisterApplicationModule();
             builder.Services.RegisterDataModule();
 
-            builder.Services.AddEndpointsApiExplorer();
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -20,7 +23,11 @@ namespace Yes.Blog
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+
+                app.MapOpenApi();
+                app.MapScalarApiReference();
             }
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
