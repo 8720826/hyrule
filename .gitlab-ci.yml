@@ -10,8 +10,10 @@ variables:
   AppPort: "9009"
 
   DockerfilePath: "./${ProjectName}/Dockerfile"
-  DockerImage: "${HARBOR_HOST}/${HARBOR_PROJECT}/${PackageName}"
-  ProductionDockerImage: "${HARBOR_HOST}/${HARBOR_PROJECT}/${PackageName}"
+  #DockerImage: "${HARBOR_HOST}/${HARBOR_PROJECT}/${PackageName}"
+  DockerImage: "${Ali_Docker_Registry}/yescent/${PackageName}"
+  #ProductionDockerImage: "${HARBOR_HOST}/${HARBOR_PROJECT}/${PackageName}"
+  ProductionDockerImage: "${Ali_Docker_Registry}/yescent/${PackageName}"
   AliDockerImage: "${Ali_Docker_Registry}/yescent/${PackageName}"
 
 build_develop:
