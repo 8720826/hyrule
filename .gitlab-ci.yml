@@ -22,7 +22,7 @@ build_develop:
     - Version=$(sed -n 's/.*<Version>\([^<]*\)<\/Version>.*/\1/p' ./${ProjectName}/${ProjectName}.csproj)
     - echo "v${Version}-develop${CI_PIPELINE_ID}"
     - docker build -f ${DockerfilePath} -t ${DockerImage}:v${Version}-develop${CI_PIPELINE_ID}  .
-    - docker login -u ${HARBOR_USERNAME} -p ${HARBOR_PASSWORD} ${HARBOR_HOST}
+    - docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry}
     - docker push ${DockerImage}:v${Version}-develop${CI_PIPELINE_ID}
 
   only:
@@ -35,7 +35,7 @@ build_release:
   script:
     - Version=$(sed -n 's/.*<Version>\([^<]*\)<\/Version>.*/\1/p' ./${ProjectName}/${ProjectName}.csproj)
     - docker build -f ${DockerfilePath} -t ${ProductionDockerImage}:v${Version}-release${CI_PIPELINE_ID}  .
-    - docker login -u ${HARBOR_USERNAME} -p ${HARBOR_PASSWORD} ${HARBOR_HOST}
+    - docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry}
     - docker push ${ProductionDockerImage}:v${Version}-release${CI_PIPELINE_ID}
   only:
     - release
