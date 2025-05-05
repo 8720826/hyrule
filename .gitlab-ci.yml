@@ -72,6 +72,7 @@ deploy_develop:
     - chmod 700 ~/.ssh
     
     ## 创建SSH_KNOWN_HOSTS
+    - echo "SSH_KNOWN_HOSTS = $SSH_KNOWN_HOSTS"
     - cp "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
