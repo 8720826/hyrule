@@ -76,7 +76,7 @@ deploy_develop:
     - cp "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh -t xiang@192.168.31.123 "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${HARBOR_USERNAME} -p ${HARBOR_PASSWORD} ${HARBOR_HOST} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${DockerImage}:v${Version}-develop${CI_PIPELINE_ID}"
+    - ssh -tt xiang@192.168.31.123 "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${HARBOR_USERNAME} -p ${HARBOR_PASSWORD} ${HARBOR_HOST} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${DockerImage}:v${Version}-develop${CI_PIPELINE_ID}"
   only:
     - develop
 
