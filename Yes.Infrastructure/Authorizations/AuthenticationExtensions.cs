@@ -12,12 +12,22 @@
                   options.LogoutPath = "/admin/logout";
                   options.ExpireTimeSpan = TimeSpan.FromDays(3);
                   options.SlidingExpiration = true;
+              });
+
+            services.AddAuthentication(AuthenticationScheme.UserApiScheme)
+              .AddCookie(AuthenticationScheme.UserScheme, options =>
+              {
+                  options.Cookie.Name = AuthenticationScheme.UserScheme;
+                  options.LoginPath = "/admin/login";
+                  options.LogoutPath = "/admin/logout";
+                  options.ExpireTimeSpan = TimeSpan.FromDays(3);
+                  options.SlidingExpiration = true;
 
                   options.Events.OnRedirectToAccessDenied =
                   options.Events.OnRedirectToLogin = c =>
                   {
-                       c.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                       return Task.FromResult(Result.Error("请登录后操作！"));
+                      c.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                      return Task.FromResult(Result.Error("请登录后操作！"));
                   };
               });
             return services;
