@@ -20,9 +20,10 @@ build_develop:
   stage: build
   script:
     - Version=$(sed -n 's/.*<Version>\([^<]*\)<\/Version>.*/\1/p' ./${ProjectName}/${ProjectName}.csproj)
-    - echo "v${Version}-develop${CI_PIPELINE_ID}"
+    - echo "${DockerImage}:v${Version}-develop${CI_PIPELINE_ID}"
+    - echo "Registry = ${Ali_Docker_Registry}"
     - docker build -f ${DockerfilePath} -t ${DockerImage}:v${Version}-develop${CI_PIPELINE_ID}  .
-    - docker login -u ${HARBOR_USERNAME} -p ${HARBOR_PASSWORD} ${HARBOR_HOST}
+    - docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry}
     - docker push ${DockerImage}:v${Version}-develop${CI_PIPELINE_ID}
 
   only:
@@ -35,7 +36,7 @@ build_release:
   script:
     - Version=$(sed -n 's/.*<Version>\([^<]*\)<\/Version>.*/\1/p' ./${ProjectName}/${ProjectName}.csproj)
     - docker build -f ${DockerfilePath} -t ${ProductionDockerImage}:v${Version}-release${CI_PIPELINE_ID}  .
-    - docker login -u ${HARBOR_USERNAME} -p ${HARBOR_PASSWORD} ${HARBOR_HOST}
+    - docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry}
     - docker push ${ProductionDockerImage}:v${Version}-release${CI_PIPELINE_ID}
   only:
     - release
@@ -71,10 +72,11 @@ deploy_develop:
     - chmod 700 ~/.ssh
     
     ## 创建SSH_KNOWN_HOSTS
-    - cp "$SSH_KNOWN_HOSTS_105" ~/.ssh/known_hosts
+    - echo "SSH_KNOWN_HOSTS = $SSH_KNOWN_HOSTS"
+    - cp "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh -t ${Test_Server_Ip} "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${HARBOR_USERNAME} -p ${HARBOR_PASSWORD} ${HARBOR_HOST} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${DockerImage}:v${Version}-develop${CI_PIPELINE_ID}"
+    - ssh -t 192.168.31.123 "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${HARBOR_USERNAME} -p ${HARBOR_PASSWORD} ${HARBOR_HOST} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${DockerImage}:v${Version}-develop${CI_PIPELINE_ID}"
   only:
     - develop
 
@@ -97,9 +99,9 @@ deploy_production:
     - chmod 700 ~/.ssh
     
     ## 创建SSH_KNOWN_HOSTS
-    - cp "$Production_SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
+    - cp "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh -t ${Production_Server_Ip} "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${HARBOR_USERNAME} -p ${HARBOR_PASSWORD} ${HARBOR_HOST} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${ProductionDockerImage}:v${Version}-release${CI_PIPELINE_ID}"
+    - ssh -t ${Server_Ip} "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${ProductionDockerImage}:v${Version}-release${CI_PIPELINE_ID}"
   only:
     - release
