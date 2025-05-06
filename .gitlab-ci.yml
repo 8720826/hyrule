@@ -99,9 +99,9 @@ deploy_production:
     - chmod 700 ~/.ssh
     
     ## 创建SSH_KNOWN_HOSTS
-    - cp "$Production_SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
+    - cp "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh -t ${Production_Server_Ip} "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${HARBOR_USERNAME} -p ${HARBOR_PASSWORD} ${HARBOR_HOST} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${ProductionDockerImage}:v${Version}-release${CI_PIPELINE_ID}"
+    - ssh -t ${Server_Ip} "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${ProductionDockerImage}:v${Version}-release${CI_PIPELINE_ID}"
   only:
     - release
