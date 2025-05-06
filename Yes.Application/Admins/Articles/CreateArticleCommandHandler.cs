@@ -6,7 +6,7 @@
         string? Slug,
         string Content,
         string? CoverUrl,
-        string? Summary,1
+        string? Summary,
         List<string>? Tags
      ) : IRequest<CreateArticleCommandResponse>;
 
