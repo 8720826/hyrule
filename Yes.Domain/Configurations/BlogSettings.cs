@@ -11,9 +11,9 @@
 
         public string Name { get; set; } = "我的博客";
 
-        public string Logo { get; set; } = "https://img.yescent.com/FosQ9ua_nPhlNQwYgJwUXi9MFsB5.jpg";
+        public string Logo { get; set; } = "";
 
-        public string Url { get; set; } = "https://yescent.com";
+        public string Url { get; set; } = "https://blog.yescent.com";
 
         public int PageSizeOfHomepage { get; set; } = 5;
 

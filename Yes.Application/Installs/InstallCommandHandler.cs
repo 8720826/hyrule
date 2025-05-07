@@ -13,6 +13,7 @@
 
     public class InstallCommandHandler(
         IConnectionStringProvider connectionStringProvider,
+        IHttpContextAccessor accessor,
         IMigratorProvider migratorProvider,
         IWebHostEnvironment env,
         IConfigurationService configurationService,
@@ -25,6 +26,7 @@
         private readonly IConfigurationService _configurationService = configurationService;
         private readonly IWebHostEnvironment _env = env;
         private readonly IFileService _fileService = fileService;
+        private readonly IHttpContextAccessor _accessor = accessor;
         public async Task<InstallCommandResponse> Handle(InstallCommand request, CancellationToken cancellationToken)
         {
             if (!string.IsNullOrEmpty(_settings.ConnectionString) && !string.IsNullOrEmpty(_settings.DatabaseType) && !string.IsNullOrEmpty(_settings.DatabaseName))
@@ -50,6 +52,7 @@
 
 
                 var settings = new BlogSettings();
+                settings.Url = _accessor.HttpContext?.GetCurrentDomain() ?? "";
 
                 settings.DatabaseName = databaseName;
                 settings.DatabaseType = databaseType.ToString();
