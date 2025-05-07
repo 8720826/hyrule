@@ -1,7 +1,6 @@
-﻿
-namespace Yes.Application.Admins.Installs
+﻿namespace Yes.Application.Installs
 {
-    public class FileService:IFileService
+    public class FileService : IFileService
     {
         public void CopyFolder(string sources, string dest)
         {

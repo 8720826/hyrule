@@ -29,11 +29,6 @@
             return databaseType;
         }
 
-        public string GetDatabaseVersion()
-        {
-            return _settings.DatabaseVersion;
-        }
-
         public string GetConnectionStringWithoutDatabase(DatabaseTypeEnum databaseType, string connectionString)
         {
             var builder = ConnectionStringBuilderFactory.CreateStringBuilder(databaseType, connectionString);

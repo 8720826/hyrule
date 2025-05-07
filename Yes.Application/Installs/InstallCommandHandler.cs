@@ -1,22 +1,21 @@
-﻿namespace Yes.Application.Admins.Installs
+﻿namespace Yes.Application.Installs
 {
     public record InstallCommand(
             string DatabaseType,
             string DatabaseServer,
-            string DatabaseVersion,
             string DatabaseUser,
             string DatabasePassword,
             string DatabaseName,
             bool UseDefaultAdmin
     ) : IRequest<InstallCommandResponse>;
 
-    public record InstallCommandResponse(bool Success,string ErrorMessage="");
+    public record InstallCommandResponse(bool Success, string ErrorMessage = "");
 
     public class InstallCommandHandler(
-        IConnectionStringProvider connectionStringProvider, 
-        IMigratorProvider migratorProvider, 
+        IConnectionStringProvider connectionStringProvider,
+        IMigratorProvider migratorProvider,
         IWebHostEnvironment env,
-		IConfigurationService  configurationService,
+        IConfigurationService configurationService,
         IFileService fileService,
         IOptionsMonitor<BlogSettings> options) : IRequestHandler<InstallCommand, InstallCommandResponse>
     {

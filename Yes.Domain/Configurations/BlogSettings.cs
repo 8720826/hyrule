@@ -8,7 +8,6 @@
 
         public string DatabaseType { get; set; }
 
-        public string DatabaseVersion { get; set; }
 
         public string Name { get; set; } = "我的博客";
 
