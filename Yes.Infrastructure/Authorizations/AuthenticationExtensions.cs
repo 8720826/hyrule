@@ -1,4 +1,6 @@
-﻿namespace Yes.Infrastructure.Authorizations
+﻿using Microsoft.AspNetCore.Http.Extensions;
+
+namespace Yes.Infrastructure.Authorizations
 {
     public static class AuthenticationExtensions
     {
@@ -16,10 +18,21 @@
                   options.Events.OnRedirectToAccessDenied =
                   options.Events.OnRedirectToLogin = c =>
                   {
-                       c.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                       return Task.FromResult(Result.Error("请登录后操作！"));
+                      if(c.Request.GetDisplayUrl().Contains("/api"))
+                      {
+                          c.Response.ContentType = "application/json";
+                          c.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                          return Task.FromResult(Result.Error("请登录后操作！"));
+                      }
+                      else
+                      {
+                          c.Response.Redirect(c.RedirectUri);
+                          return Task.CompletedTask;
+                      }
                   };
               });
+
+
             return services;
         }
 
