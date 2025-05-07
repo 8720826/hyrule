@@ -3,6 +3,7 @@
     public record InstallCommand(
             string DatabaseType,
             string DatabaseServer,
+            string DatabaseVersion,
             string DatabaseUser,
             string DatabasePassword,
             string DatabaseName,
@@ -13,7 +14,6 @@
 
     public class InstallCommandHandler(
         IConnectionStringProvider connectionStringProvider,
-        IHttpContextAccessor accessor,
         IMigratorProvider migratorProvider,
         IWebHostEnvironment env,
         IConfigurationService configurationService,
@@ -26,7 +26,6 @@
         private readonly IConfigurationService _configurationService = configurationService;
         private readonly IWebHostEnvironment _env = env;
         private readonly IFileService _fileService = fileService;
-        private readonly IHttpContextAccessor _accessor = accessor;
         public async Task<InstallCommandResponse> Handle(InstallCommand request, CancellationToken cancellationToken)
         {
             if (!string.IsNullOrEmpty(_settings.ConnectionString) && !string.IsNullOrEmpty(_settings.DatabaseType) && !string.IsNullOrEmpty(_settings.DatabaseName))
@@ -49,11 +48,11 @@
                 Enum.TryParse(request.DatabaseType, out DatabaseTypeEnum databaseType);
                 var databaseServer = request.DatabaseServer;
                 var databaseName = request.DatabaseName;
-
+                var databaseVersion = request.DatabaseVersion;
 
                 var settings = new BlogSettings();
-                settings.Url = _accessor.HttpContext?.GetCurrentDomain() ?? "";
 
+                settings.DatabaseVersion = databaseVersion;
                 settings.DatabaseName = databaseName;
                 settings.DatabaseType = databaseType.ToString();
                 settings.ConnectionString = _connectionStringProvider.GetConnectionString(databaseType, databaseServer, databaseName, request.DatabaseUser, request.DatabasePassword);

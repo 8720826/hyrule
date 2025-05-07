@@ -8,7 +8,7 @@ namespace Yes.Domain.Core.Data
 
         DatabaseTypeEnum GetDatabaseType();
 
-
+        string GetDatabaseVersion();
 
         string GetConnectionStringWithoutDatabase(DatabaseTypeEnum databaseType, string connectionString);
 

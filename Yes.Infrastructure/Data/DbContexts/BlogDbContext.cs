@@ -5,12 +5,13 @@
 
         private readonly string _connectionString;
         private readonly DatabaseTypeEnum _databaseType;
-
+        private readonly string _databaseVersion;
 
         public BlogDbContext(IConnectionStringProvider connectionStringProvider)
         {
             _connectionString = connectionStringProvider.GetConnectionString();
             _databaseType = connectionStringProvider.GetDatabaseType();
+            _databaseVersion = connectionStringProvider.GetDatabaseVersion();
         }
 
 
@@ -20,7 +21,7 @@
             _ = _databaseType switch
             {
                 DatabaseTypeEnum.SqlServer => builder.UseSqlServer(_connectionString),
-                DatabaseTypeEnum.MySql => builder.UseMySql(_connectionString, MySqlServerVersion.AutoDetect(_connectionString)),
+                DatabaseTypeEnum.MySql => builder.UseMySql(_connectionString, string.IsNullOrEmpty(_databaseVersion) ? MySqlServerVersion.AutoDetect(_connectionString) : new MySqlServerVersion(_databaseVersion)),
                 DatabaseTypeEnum.PostgreSQL => builder.UseNpgsql(_connectionString),
 
                 _ => throw new DatabaseNotSupportedException()

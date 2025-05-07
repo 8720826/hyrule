@@ -91,19 +91,23 @@
                 <option value="PostgreSql">PostgreSQL</option>
             </select>
         </div>
-        <div class="form-group" >
+        <div class="form-group" x-show="data.databaseType && data.databaseType=='MySql'">
+            <label>数据库版本:</label>
+            <input type="text" class="form-control" x-model="data.databaseVersion" placeholder="请填写数据库版本,如 8.4.5">
+        </div>
+        <div class="form-group">
             <label>数据库地址:</label>
             <input type="text" class="form-control" x-model="data.databaseServer" placeholder="请输入您的数据库地址">
         </div>
-        <div class="form-group" >
+        <div class="form-group">
             <label>数据库用户名:</label>
             <input type="text" class="form-control" x-model="data.databaseUser" placeholder="请输入您的数据库用户名">
         </div>
-        <div class="form-group" >
+        <div class="form-group">
             <label>数据库密码:</label>
             <input type="text" class="form-control" x-model="data.databasePassword" placeholder="请输入您的数据库密码">
         </div>
-        <div class="form-group" >
+        <div class="form-group">
             <label>数据库名称:</label>
             <input type="text" class="form-control" x-model="data.databaseName" placeholder="请输入您的数据库名称">
         </div>

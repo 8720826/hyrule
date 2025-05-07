@@ -1,7 +1,4 @@
 ﻿
-
-using Yes.Application.Installs;
-
 namespace Yes.Blog.Endpoints.Blogs
 {
     public class InstallEndpoint : BlogEndpointScheme, IEndpoint
@@ -11,6 +8,7 @@ namespace Yes.Blog.Endpoints.Blogs
         public record Request(
             string DatabaseType,
             string DatabaseServer,
+            string DatabaseVersion,
             string DatabaseUser,
             string DatabasePassword,
             string DatabaseName,

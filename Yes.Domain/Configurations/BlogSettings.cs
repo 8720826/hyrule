@@ -2,13 +2,13 @@
 {
     public class BlogSettings
     {
-        public string ConnectionString { get; set; }
+        public string ConnectionString { get; set; } = "";
 
-        public string DatabaseName { get; set; }
+        public string DatabaseName { get; set; } = "";
 
-        public string DatabaseType { get; set; }
+        public string DatabaseType { get; set; } = "";
 
-
+        public string DatabaseVersion { get; set; } = "";
         public string Name { get; set; } = "我的博客";
 
         public string Logo { get; set; } = "";
