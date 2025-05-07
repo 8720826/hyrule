@@ -1,4 +1,6 @@
-﻿namespace Yes.Infrastructure.Migrator.Providers
+﻿
+
+namespace Yes.Infrastructure.Migrator.Providers
 {
     public class MigratorProvider : IMigratorProvider
     {
@@ -70,14 +72,50 @@
             {
                 case DatabaseTypeEnum.SqlServer:
 
-                    var connection = new SqlConnection(connectionStringWithoutDatabase);
-                    var records = connection.Query($"SELECT name FROM sys.databases WHERE name = '{dbName}';");
-                    if (!records.Any())
+                    using (var connection = new SqlConnection(connectionStringWithoutDatabase))
                     {
-                        connection.Execute($"CREATE DATABASE {dbName}");
+                        var records = connection.Query($"SELECT name FROM sys.databases WHERE name = '{dbName}';");
+                        if (!records.Any())
+                        {
+                            connection.Execute($"CREATE DATABASE {dbName}");
+                        }
                     }
                     break;
 
+                case DatabaseTypeEnum.PostgreSQL:
+
+                    using (var connection = new NpgsqlConnection(connectionStringWithoutDatabase))
+                    {
+                        var exists = connection.ExecuteScalar<bool>(
+                            "SELECT EXISTS(SELECT 1 FROM pg_database WHERE datname = @dbName)",
+                            new { dbName }
+                        );
+                        if (!exists)
+                        {
+                            connection.Execute($"CREATE DATABASE \"{dbName}\" ENCODING = 'UTF8'");
+                        }
+                    }
+                    break;
+
+                case DatabaseTypeEnum.MySql:
+                    using (var connection = new MySqlConnection(connectionStringWithoutDatabase)) // 需要 MySql.Data NuGet 包
+                    {
+                        // 参数化查询
+                        var records = connection.Query<string>(
+                            "SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = @dbName",
+                            new { dbName }
+                        );
+
+                        if (!records.Any())
+                        {
+                            // 指定字符集和排序规则（推荐）
+                            connection.Execute($@"
+                        CREATE DATABASE `{dbName}` 
+                        CHARACTER SET utf8mb4 
+                        COLLATE utf8mb4_general_ci");
+                        }
+                    }
+                    break;
 
 
             }

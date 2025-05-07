@@ -18,7 +18,6 @@ global using Yes.Application.Admins.Auths;
 global using Yes.Application.Admins.Categories;
 global using Yes.Application.Admins.Comments;
 global using Yes.Application.Admins.Configurations;
-global using Yes.Application.Admins.Installs;
 global using Yes.Application.Admins.Pages;
 global using Yes.Application.Admins.Statistics;
 global using Yes.Application.Admins.Storages;
@@ -43,3 +42,6 @@ global using Yes.Infrastructure.Authorizations;
 global using Yes.Infrastructure.Middlewares;
 global using Yes.Infrastructure.ViewEngine;
 global using IResult = Yes.Domain.Core.Models.IResult;
+
+global using Yes.Application.Installs;
+global using Scalar.AspNetCore;

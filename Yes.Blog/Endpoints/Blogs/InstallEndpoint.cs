@@ -1,5 +1,4 @@
 ﻿
-
 namespace Yes.Blog.Endpoints.Blogs
 {
     public class InstallEndpoint : BlogEndpointScheme, IEndpoint
