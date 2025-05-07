@@ -27,7 +27,7 @@
             return databaseType switch
             {
                 DatabaseTypeEnum.SqlServer => builder.AddSqlServer(),
-                DatabaseTypeEnum.MySql => builder.AddMySql8().AddMySql5().AddMySql4(),
+                DatabaseTypeEnum.MySql => builder.AddMySql(),
                 DatabaseTypeEnum.PostgreSQL => builder.AddPostgres(),
 
                 _ => throw new DatabaseNotSupportedException()

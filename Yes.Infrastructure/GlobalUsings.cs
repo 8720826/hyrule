@@ -44,3 +44,6 @@ global using Yes.Infrastructure.Authorizations.Identity.Authroizations;
 global using Yes.Infrastructure.Authorizations.Identity.Context;
 global using Yes.Infrastructure.Data.DbContexts;
 global using Yes.Infrastructure.Migrator.Migrations;
+global using MySql.Data.MySqlClient;
+global using Npgsql;
+global using Microsoft.AspNetCore.Http.Extensions;

@@ -10,7 +10,6 @@ namespace Yes.Domain.Core.Data
 
         string GetDatabaseVersion();
 
-
         string GetConnectionStringWithoutDatabase(DatabaseTypeEnum databaseType, string connectionString);
 
         string GetDatabase(DatabaseTypeEnum databaseType, string connectionString);

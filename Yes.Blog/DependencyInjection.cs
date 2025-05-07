@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Yes.Blog
+﻿namespace Yes.Blog
 {
     public static class DependencyInjection
     {

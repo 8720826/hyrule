@@ -1,7 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.OpenApi.Any;
-using Microsoft.OpenApi.Models;
-using Scalar.AspNetCore;
 
 namespace Yes.Blog
 {

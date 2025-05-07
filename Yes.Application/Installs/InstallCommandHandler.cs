@@ -1,4 +1,4 @@
-﻿namespace Yes.Application.Admins.Installs
+﻿namespace Yes.Application.Installs
 {
     public record InstallCommand(
             string DatabaseType,
@@ -10,13 +10,13 @@
             bool UseDefaultAdmin
     ) : IRequest<InstallCommandResponse>;
 
-    public record InstallCommandResponse(bool Success,string ErrorMessage="");
+    public record InstallCommandResponse(bool Success, string ErrorMessage = "");
 
     public class InstallCommandHandler(
-        IConnectionStringProvider connectionStringProvider, 
-        IMigratorProvider migratorProvider, 
+        IConnectionStringProvider connectionStringProvider,
+        IMigratorProvider migratorProvider,
         IWebHostEnvironment env,
-		IConfigurationService  configurationService,
+        IConfigurationService configurationService,
         IFileService fileService,
         IOptionsMonitor<BlogSettings> options) : IRequestHandler<InstallCommand, InstallCommandResponse>
     {
@@ -48,10 +48,11 @@
                 Enum.TryParse(request.DatabaseType, out DatabaseTypeEnum databaseType);
                 var databaseServer = request.DatabaseServer;
                 var databaseName = request.DatabaseName;
-
+                var databaseVersion = request.DatabaseVersion;
 
                 var settings = new BlogSettings();
 
+                settings.DatabaseVersion = databaseVersion;
                 settings.DatabaseName = databaseName;
                 settings.DatabaseType = databaseType.ToString();
                 settings.ConnectionString = _connectionStringProvider.GetConnectionString(databaseType, databaseServer, databaseName, request.DatabaseUser, request.DatabasePassword);
