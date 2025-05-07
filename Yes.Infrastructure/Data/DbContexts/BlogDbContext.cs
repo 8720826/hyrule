@@ -21,7 +21,7 @@
             _ = _databaseType switch
             {
                 DatabaseTypeEnum.SqlServer => builder.UseSqlServer(_connectionString),
-                DatabaseTypeEnum.MySql => builder.UseMySql(_connectionString, string.IsNullOrEmpty(_databaseVersion) ? MySqlServerVersion.AutoDetect(_connectionString) : new MySqlServerVersion(_databaseVersion)),
+                DatabaseTypeEnum.MySql => builder.UseMySql(_connectionString, string.IsNullOrEmpty(_databaseVersion) ? MySqlServerVersion.AutoDetect(_connectionString) : new MySqlServerVersion(_databaseVersion), builder => builder.TranslateParameterizedCollectionsToConstants()),
                 DatabaseTypeEnum.PostgreSQL => builder.UseNpgsql(_connectionString),
 
                 _ => throw new DatabaseNotSupportedException()
