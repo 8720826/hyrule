@@ -10,7 +10,7 @@
 
         public string DatabaseVersion { get; set; }
 
-        public string Name { get; set; } = "Hyrule";
+        public string Name { get; set; } = "我的博客";
 
         public string Logo { get; set; } = "https://img.yescent.com/FosQ9ua_nPhlNQwYgJwUXi9MFsB5.jpg";
 
