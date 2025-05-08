@@ -17,5 +17,13 @@ namespace Yes.Domain.Core.Extensions
             }
             return ipAddress ?? "";
         }
+
+        public static string GetCurrentDomain(this HttpContext httpContext)
+        {
+            var request = httpContext.Request;
+            var host = request.Headers["X-Forwarded-Host"].FirstOrDefault() ?? request.Host.Host;
+            var protocol = request.Headers["X-Forwarded-Proto"].FirstOrDefault() ?? request.Scheme;
+            return $"{protocol}://{host}";
+        }
     }
 }
