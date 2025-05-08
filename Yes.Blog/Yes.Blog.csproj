@@ -253,47 +253,47 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="wwwroot\themes\default\Index.liquid">
+    <Content Update="wwwroot\defaulttheme\Index.liquid">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="wwwroot\themes\default\_Archive.liquid">
+    <Content Update="wwwroot\defaulttheme\_Archive.liquid">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="wwwroot\themes\default\_Footer.liquid">
+    <Content Update="wwwroot\defaulttheme\_Footer.liquid">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="wwwroot\themes\default\_Head.liquid">
+    <Content Update="wwwroot\defaulttheme\_Head.liquid">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="wwwroot\themes\default\_Header.liquid">
+    <Content Update="wwwroot\defaulttheme\_Header.liquid">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="wwwroot\themes\default\_Layout.liquid">
+    <Content Update="wwwroot\defaulttheme\_Layout.liquid">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="wwwroot\themes\default\_Pagination.liquid">
+    <Content Update="wwwroot\defaulttheme\_Pagination.liquid">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="wwwroot\themes\default\_Search.liquid">
+    <Content Update="wwwroot\defaulttheme\_Search.liquid">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="wwwroot\themes\default\_SiteCategories.liquid">
+    <Content Update="wwwroot\defaulttheme\_SiteCategories.liquid">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="wwwroot\themes\default\_Tags.liquid">
+    <Content Update="wwwroot\defaulttheme\_Tags.liquid">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="wwwroot\themes\default\_ViewStart.liquid">
+    <Content Update="wwwroot\defaulttheme\_ViewStart.liquid">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

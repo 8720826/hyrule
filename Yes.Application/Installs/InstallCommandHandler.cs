@@ -41,7 +41,7 @@
                 var dir = new DirectoryInfo(defaultTheme);
                 if (dir.GetFiles().Length == 0)
                 {
-                    var sourcePath = Path.Combine(_env.WebRootPath, "themes", "default");
+                    var sourcePath = Path.Combine(_env.WebRootPath, "defaulttheme");
                     _fileService.CopyFolder(sourcePath, defaultTheme);
                 }
 
