@@ -1063,10 +1063,10 @@ tag {
     padding:0px;
 }
 
-.theme-box .panel-image {
-    max-height: 200px;
-    margin-right: 20px;
-}
+    .theme-box .panel-image {
+        max-height: 200px;
+        margin: 10px 20px 10px 10px;
+    }
 
 .theme-box .panel-content {
     flex-grow: 1;
@@ -1076,8 +1076,8 @@ tag {
     color: #FFF;
     width: 240px;
     display: flex;
-    justify-content: center; /* 水平居中 */
-    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 姘村钩灞呬腑 */
+    align-items: center; /* 鍨傜洿灞呬腑 */
 }
 
 .logo {
