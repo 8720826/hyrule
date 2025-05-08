@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Yes.Blog
+﻿namespace Yes.Blog
 {
     public static class DependencyInjection
     {
@@ -30,9 +28,9 @@ namespace Yes.Blog
 
             services.AddAuthorization();
 
-            builder.Services.AddEndpointsApiExplorer();
+            services.AddEndpointsApiExplorer();
 
-            builder.Services.AddOpenApi(options =>
+            services.AddOpenApi(options =>
             {
                 options.AddDocumentTransformer((document, context, cancellationToken) =>
                 {

@@ -2,19 +2,18 @@
 {
     public class BlogSettings
     {
-        public string ConnectionString { get; set; }
+        public string ConnectionString { get; set; } = "";
 
-        public string DatabaseName { get; set; }
+        public string DatabaseName { get; set; } = "";
 
-        public string DatabaseType { get; set; }
+        public string DatabaseType { get; set; } = "";
 
-        public string DatabaseVersion { get; set; }
+        public string DatabaseVersion { get; set; } = "";
+        public string Name { get; set; } = "我的博客";
 
-        public string Name { get; set; } = "Hyrule";
+        public string Logo { get; set; } = "";
 
-        public string Logo { get; set; } = "https://img.yescent.com/FosQ9ua_nPhlNQwYgJwUXi9MFsB5.jpg";
-
-        public string Url { get; set; } = "https://yescent.com";
+        public string Url { get; set; } = "https://blog.yescent.com";
 
         public int PageSizeOfHomepage { get; set; } = 5;
 
