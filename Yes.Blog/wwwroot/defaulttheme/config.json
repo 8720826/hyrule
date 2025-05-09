@@ -1,7 +1,7 @@
 ﻿{
-    "name": "Astra Theme",
+    "name": "Default Theme",
     "version": "v1.0.0",
     "author": "Hyrule",
-    "description": "这是一套来自wp移植的模板，官方排名较靠前的 Astra 免费版本",
-    "homepage": "https://hyrule.yescent.com/"
+    "description": "这是默认的模板",
+    "homepage": "https://blog.yescent.com/"
 }
