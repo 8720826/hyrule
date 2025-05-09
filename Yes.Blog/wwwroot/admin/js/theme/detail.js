@@ -35,7 +35,7 @@
                 return this;
             },
             loadFile() {
-                axios.get('/themes/' + themeName + '/files/' + fileName)
+                axios.get('/themes/' + themeName + '/file/?fileName=' + fileName)
                     .then(data => {
                         this.file = data;
                         editor.setValue(this.file.content);
@@ -47,7 +47,7 @@
                     return;
                 }
                 this.isSubmitting = true;
-                axios.put('/themes/' + themeName + '/files/' + fileName, { content: this.file.content })
+                axios.put('/themes/' + themeName + '/file/?fileName=' + fileName, { content: this.file.content })
                     .then(data => {
                         console.log('data:', data);
                         location.href = "/admin/theme/detail?themeName=" + themeName + "&fileName=" + fileName + "";

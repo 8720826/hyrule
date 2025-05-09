@@ -2,14 +2,16 @@
 {
     public class GetThemeFileEndpoint : ThemeEndpointScheme, IEndpoint
 	{
-		public void Map(IEndpointRouteBuilder app) => app.MapGet("/themes/{themeName}/files/{fileName}", Handle);
-
-        public record Request([FromRoute(Name = "themeName")] string ThemeName, [FromRoute(Name = "fileName")] string FileName);
+		public void Map(IEndpointRouteBuilder app) => app.MapGet("/themes/{themeName}/file", Handle);
 
 
-        private async Task<IResult> Handle([AsParameters] Request request, IMediator mediator, IMapper mapper, CancellationToken cancellationToken)
+
+        private async Task<IResult> Handle(
+			[FromRoute(Name = "themeName")] string themeName, 
+			[FromQuery] string fileName, IMediator mediator, 
+			IMapper mapper, CancellationToken cancellationToken)
 		{
-			var query = new GetThemeFileQuery(request.ThemeName, request.FileName);
+			var query = new GetThemeFileQuery(themeName, fileName);
 			var response = await mediator.Send(query, cancellationToken);
 
 
