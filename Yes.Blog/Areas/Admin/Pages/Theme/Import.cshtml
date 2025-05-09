@@ -37,19 +37,19 @@
                     <div class="form-group">
                         <label>选择要导入的模板文件</label>
                         <div id="img-container">
-                            <template x-if="config.logo">
+                            <template x-if="uploadFile">
                                 <div class="img-thumb img-item">
-                                    <img class="thumb-icon" :src="config.logo" />
-                                    <a href="javascript:;" class="img-remove" x-on:click="config.logo='';tempfile=null">x</a>
+                                    <img class="thumb-icon" src="/admin/images/zip.png" />
+                                    <a href="javascript:;" class="img-remove" x-on:click="uploadFile='';tempfile=null">x</a>
                                 </div>
                             </template>
-                            <template x-if="!config.logo">
+                            <template x-if="!uploadFile">
                                 <div class="img-up-add  img-item">
-                                    <span class="img-add-icon" x-on:click="addIcon()">+</span>
+                                    <span class="img-add-icon" x-on:click="addFile()">+</span>
                                 </div>
                             </template>
-                            <input type="hidden" x-model="config.logo">
-                            <input type="file" name="files" id="img-file-input" x-model="tempfile" x-on:change="handleThemeUpload($event.target.files[0],function(url){ config.logo=url; })">
+                            <input type="hidden" x-model="uploadFile">
+                            <input type="file" name="files" id="img-file-input" x-model="tempfile" x-on:change="handleThemeUpload($event.target.files[0])">
                         </div>
                     </div>
 

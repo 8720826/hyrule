@@ -14,6 +14,7 @@
             isSubmitting: false,
             themeName: "",
             fileName: "",
+            uploadFile:"",
             loadFiles() {
 
                 axios.get('/themes/' + themeName +'/files')
@@ -29,9 +30,20 @@
                     });
                 return this;
             },
+            isZipFile(filename) {
+                if (typeof filename !== 'string') return false;
+                return /\.zip$/i.test(filename);
+            },
             handleThemeUpload(file) {
+                if (!this.isZipFile(file.name)) {
+                    window.pushError("请上传zip文件");
+                    return;
+                }
+                this.uploadFile = file;
+            },
+            save() {
                 const formData = new FormData();
-                formData.append('file', file);
+                formData.append('file', this.uploadFile);
 
                 axios.post('/themes/upload', formData, {
                     headers: {
@@ -42,22 +54,7 @@
                     location.href = "/admin/theme";
                 })
             },
-            editFile() {
-                if (this.isSubmitting) {
-                    return;
-                }
-                this.isSubmitting = true;
-                axios.put('/themes/' + themeName + '/files/' + fileName, { content: this.file.content })
-                    .then(data => {
-                        console.log('data:', data);
-                        location.href = "/admin/theme/detail?themeName=" + themeName + "&fileName=" + fileName + "";
-                    })
-                    .finally(() => {
-                        this.isSubmitting = false;
-                    });
-
-            },
-            addIcon() {
+            addFile() {
                 const fileinput = document.getElementById('img-file-input');
                 if (fileinput) {
                     fileinput.click();
