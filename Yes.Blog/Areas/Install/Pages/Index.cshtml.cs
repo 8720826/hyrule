@@ -6,7 +6,7 @@ namespace Yes.Blog.Areas.Install.Pages
     {
         public IActionResult OnGet()
         {
-            var defaultTheme = Path.Combine(env.ContentRootPath, "files", "defaulttheme");
+            var defaultTheme = Path.Combine(env.ContentRootPath, "files", "themes", "default");
             var dir = new DirectoryInfo(defaultTheme);
             if (!dir.Exists)
             {
@@ -14,7 +14,7 @@ namespace Yes.Blog.Areas.Install.Pages
             }
             if (dir.GetFiles().Length == 0)
             {
-                var sourcePath = Path.Combine(env.WebRootPath, "themes", "default");
+                var sourcePath = Path.Combine(env.WebRootPath, "defaulttheme");
                 fileService.CopyFolder(sourcePath, defaultTheme);
             }
 
