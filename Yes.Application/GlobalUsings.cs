@@ -32,3 +32,4 @@ global using Yes.Infrastructure.Authorizations.Identity.Context;
 global using Yes.Infrastructure.Authorizations.Identity;
 global using Microsoft.Data.SqlClient;
 global using Yes.Infrastructure.Migrator.Providers;
+global using Yes.Infrastructure.Helpers;
