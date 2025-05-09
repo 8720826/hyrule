@@ -18,11 +18,11 @@ check-merge-target:
   stage: check
   script:
     - |
-      # 获取当前合并请求的目标分支
+      ## 获取当前合并请求的目标分支
       TARGET_BRANCH="$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
       SOURCE_BRANCH="$CI_COMMIT_BRANCH"
 
-      # 定义允许合并的规则
+      ## 定义允许合并的规则
       if [[ "$SOURCE_BRANCH" == "develop" && "$TARGET_BRANCH" != "release" ]]; then
         echo "❌ 禁止将 develop 分支合并到 $TARGET_BRANCH"
         exit 1
@@ -34,7 +34,6 @@ check-merge-target:
       fi
   only:
     - merge_requests
-
 
 build_develop:
   stage: build
