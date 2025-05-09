@@ -4,96 +4,79 @@
 }
 
 
-<div id="urHere">管理中心<b>></b><strong>导入模板</strong> </div>
-<div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
-    <h3>
-        <a asp-page="./Index" class="actionBtn add" style="margin-left:10px">模板列表</a>
-        导入模板
-    </h3>
+<template x-data x-if="$store.errorMessage||1">
+    <div class="alert alert-danger floating-div" x-show="$store.errorMessage" x-transition x-html="$store.errorMessage"></div>
+</template>
 
-    <div class="idTabs">
-        <form method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
-
-
-                <tr>
-                    <td align="right"><label for="ArticleInput.CoverUrl">选择要导入的模板文件</label></td>
-                    <td>
-                        <input type="text" for="ArticleInput.CoverUrl" size="80" class="inpMain" id="CoverUrl" readonly />
-                        <a href="javascript:;" class="a-upload" id="uploadBtn">
-                            <input type="file" name="file" size="18" for="CoverUrl" accept="image/*" />
-                            上传
-                        </a>
-                        <p class="text-danger" id="error-CoverUrl"></p>
-                        <small></small>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td></td>
-                    <td>
-
-                        <input name="submit" class="btn" type="submit" value="提交" />
-                    </td>
-                </tr>
-            </table>
-
-        </form>
+<div class="header">
+    <div class="stats">
     </div>
+
+
+    <h1 class="page-title">导入模板</h1>
+    <ul class="breadcrumb">
+        <li>
+            <a asp-page="/Index">管理中心</a>
+        </li>
+        <li>
+            <a asp-page="/Theme/Index">模板列表</a>
+        </li>
+        <li class="active">导入模板</li>
+
+    </ul>
+</div>
+
+<div class="main-content" x-data="data">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="row">
+                <div class="col-lg-6" >
+
+                    <div class="form-group">
+                        <label>选择要导入的模板文件</label>
+                        <div id="img-container">
+                            <template x-if="uploadFile">
+                                <div class="img-thumb img-item">
+                                    <img class="thumb-icon" src="/admin/images/zip.png" />
+                                    <a href="javascript:;" class="img-remove" x-on:click="uploadFile='';tempfile=null">x</a>
+                                </div>
+                            </template>
+                            <template x-if="!uploadFile">
+                                <div class="img-up-add  img-item">
+                                    <span class="img-add-icon" x-on:click="addFile()">+</span>
+                                </div>
+                            </template>
+                            <input type="hidden" x-model="uploadFile">
+                            <input type="file" name="files" id="img-file-input" x-model="tempfile" x-on:change="handleThemeUpload($event.target.files[0])">
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+
+
+
+            </div>
+
+            <div class="btn-toolbar list-toolbar">
+                <button class="btn btn-primary" x-on:click="save()"><i class="fa fa-save"></i> 提交</button>
+            </div>
+        </div>
+    </div>
+
+
+    <partial name="_Footer" />
 </div>
 
 @section Scripts {
-    <script src="~/admin/js/jquery.tab.js" asp-append-version="true"></script>
-    <script type="text/javascript" src="~/admin/editor.md/editormd.min.js" asp-append-version="true"></script>
     <script src="~/admin/js/qiniu.min.js" asp-append-version="true"></script>
-    <script type="text/javascript">
-        $(function () {
-            var editor = editormd("content-editor", {
-                // width  : "100%",
-                height: "600",
-                path: "/admin/editor.md/lib/",
-                codeFold: true,
-                htmlDecode: 'iframe|on*', // 开启标签
-                imageUpload: true,
-                imageUploadURL: "./data/upload.php?type=editormd",
-                /*
-                上传的后台只需要返回一个 JSON 数据，结构如下：
-                {
-                   success : 0 | 1,           // 0 表示上传失败，1 表示上传成功
-                   message : "提示的信息，上传成功或上传失败及错误信息等。",
-                   url     : "图片地址"        // 上传成功时才返回
-                }
-                */
-            });
-        });
-
-        $(function () { $(".idTabs").idTabs(); });
-
-
-
-
-        $(function () {
-
-
-            $("body").on("change propertychange", "input[type='file']", function (e) {
-
-                var id = $(this).attr("for");
-
-                var file = e.target.files[0];
-                if (!file) {
-                    $("#error-" + id).html("文件上传失败！");
-                    return;
-                }
-
-                $("#" + id).val(file.name);
-            });
-
-
-
-
-        });
-
-
-    </script>
+    <script src="~/admin/js/theme/import.js" asp-append-version="true"></script>
 }
+
+
+

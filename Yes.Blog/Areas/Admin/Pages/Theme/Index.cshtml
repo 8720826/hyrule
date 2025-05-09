@@ -13,9 +13,9 @@
 <div class="header">
     <h1 class="page-title">
         模板设置
-        @*<a class="btn btn-default  btn-xs" asp-page="./Import">
+        <a class="btn btn-default  btn-xs" asp-page="./Import">
             <i class="fa fa-plus"></i> 导入模板
-        </a>*@
+        </a>
     </h1>
     <ul class="breadcrumb">
         <li>
@@ -41,6 +41,7 @@
                             <p>简介：<span x-text="item.description"></span></p>
                             <p>主页：<span x-text="item.homepage"></span></p>
                             <a class="activate" href="javascript:;" x-show="!item.isInUse" x-on:click="showModal = true;this.theme=item.dirName;">切换到该主题</a>
+                            <a class="activate" href="/admin/theme/detail" x-show="item.isInUse">自定义模板内容</a>
                         </div>
                     </div>
                 </div>
