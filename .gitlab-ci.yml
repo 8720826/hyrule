@@ -7,11 +7,12 @@ variables:
   Namespace: "yescent"
   ProjectName: "Yes.Blog"
   PackageName: "yes.blog"
+  MasterPackageName: "hyrule"
   AppPort: "9009"
 
   DockerfilePath: "./${ProjectName}/Dockerfile"
   DockerImage: "${Ali_Docker_Registry}/${Namespace}/${PackageName}"
-
+  MasterDockerImage: "${Ali_Docker_Registry}/${Namespace}/${MasterPackageName}"
 
 
 check-merge-target:
@@ -38,7 +39,8 @@ build_develop:
   stage: build
   script:
     - Version=$(sed -n 's/.*<Version>\([^<]*\)<\/Version>.*/\1/p' ./${ProjectName}/${ProjectName}.csproj)
-    - docker build -f ${DockerfilePath} -t ${DockerImage}:v${Version}-develop${CI_PIPELINE_ID}  .
+    - DevelopVersion=v${Version}-develop${CI_PIPELINE_ID}
+    - docker build -f ${DockerfilePath} -t ${DockerImage}:${DevelopVersion}  .
   only:
     - develop
 
@@ -48,9 +50,10 @@ build_release:
   stage: build
   script:
     - Version=$(sed -n 's/.*<Version>\([^<]*\)<\/Version>.*/\1/p' ./${ProjectName}/${ProjectName}.csproj)
-    - docker build -f ${DockerfilePath} -t ${DockerImage}:v${Version}-release${CI_PIPELINE_ID}  .
+    - ReleaseVersion=v${Version}-release${CI_PIPELINE_ID}
+    - docker build -f ${DockerfilePath} -t ${DockerImage}:${ReleaseVersion}  .
     - docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry}
-    - docker push ${DockerImage}:v${Version}-release${CI_PIPELINE_ID}
+    - docker push ${DockerImage}:${ReleaseVersion}
   only:
     - release
 
@@ -59,11 +62,12 @@ build_master:
   stage: build
   script:
     - Version=$(sed -n 's/.*<Version>\([^<]*\)<\/Version>.*/\1/p' ./${ProjectName}/${ProjectName}.csproj)
-    - docker build -f ${DockerfilePath} -t ${DockerImage}:v${Version}.${CI_PIPELINE_ID}  .
-    - docker tag ${DockerImage}:v${Version}.${CI_PIPELINE_ID} ${DockerImage}:latest
+    - MasterVersion=v${Version}.${CI_PIPELINE_ID}
+    - docker build -f ${DockerfilePath} -t ${MasterDockerImage}:${MasterVersion}  .
+    - docker tag ${MasterDockerImage}:${MasterVersion} ${MasterDockerImage}:latest
     - docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry}
-    - docker push ${DockerImage}:v${Version}.${CI_PIPELINE_ID}
-    - docker rm -f ${DockerImage}:latest && docker push ${DockerImage}:latest
+    - docker push ${MasterDockerImage}:${MasterVersion}
+    - docker push ${MasterDockerImage}:latest && docker rm -f ${MasterDockerImage}:latest
   only:
     - master
 
@@ -73,6 +77,7 @@ deploy_production:
   stage: deploy
   before_script:
     - Version=$(sed -n 's/.*<Version>\([^<]*\)<\/Version>.*/\1/p' ./${ProjectName}/${ProjectName}.csproj)
+    - ReleaseVersion=v${Version}-release${CI_PIPELINE_ID}
     ## 安装ssh-agent
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
@@ -89,6 +94,7 @@ deploy_production:
     - cp "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh -t ${Server_Ip} "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${DockerImage}:v${Version}-release${CI_PIPELINE_ID}"
+    - ssh -t ${Server_Ip} "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${DockerImage}:${ReleaseVersion}"
   only:
     - release
+
