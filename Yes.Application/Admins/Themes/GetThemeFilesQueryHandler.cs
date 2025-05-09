@@ -7,10 +7,8 @@
         string FileName
     );
 
-    public class GetThemeFilesQueryHandler(IOptionsMonitor<BlogSettings> options, IMapper mapper, IWebHostEnvironment env) : IRequestHandler<GetThemeFilesQuery, List<GetThemeFilesQueryResponse>>
+    public class GetThemeFilesQueryHandler(IWebHostEnvironment env) : IRequestHandler<GetThemeFilesQuery, List<GetThemeFilesQueryResponse>>
     {
-        private readonly BlogSettings _settings = options.CurrentValue;
-        private readonly IMapper _mapper = mapper;
         private readonly IWebHostEnvironment _env = env;
 
         public async Task<List<GetThemeFilesQueryResponse>> Handle(GetThemeFilesQuery request, CancellationToken cancellationToken)
@@ -18,11 +16,11 @@
             var themeName = request.Name;
             var themes = new List<GetThemeFilesQueryResponse>();
             var themePath = Path.Combine(_env.ContentRootPath, "files", "themes", themeName);
-            var files = Directory.GetFiles(themePath).Where(x=>x.EndsWith(".liquid") || x.EndsWith(".css") || x.EndsWith(".js"));
 
+            var allowedExtensions = new[] { ".liquid", ".css", ".js" };
+            var files = Directory.GetFiles(themePath, "*.*", SearchOption.AllDirectories).Where(file => allowedExtensions.Contains(Path.GetExtension(file).ToLowerInvariant()));
 
-
-            themes = files.Select(x=>new GetThemeFilesQueryResponse(Path.GetFileName(x))).ToList();
+            themes = files.Select(x=>new GetThemeFilesQueryResponse(Path.GetRelativePath(themePath, x))).ToList();
 
             return themes;
         }

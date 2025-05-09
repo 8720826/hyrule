@@ -3,7 +3,7 @@ namespace Yes.Blog.Endpoints.Admins.Themes
 {
     public class UpdateThemeFileEndpoint : ThemeEndpointScheme, IEndpoint
 	{
-		public void Map(IEndpointRouteBuilder app) => app.MapPut("/themes/{themeName}/files/{fileName}", Handle);//.WithRequestValidation<Request>();
+		public void Map(IEndpointRouteBuilder app) => app.MapPut("/themes/{themeName}/file", Handle);//.WithRequestValidation<Request>();
 
         internal record Request(
 			string Content 
@@ -21,7 +21,7 @@ namespace Yes.Blog.Endpoints.Admins.Themes
 
 		private async Task<IResult> Handle([FromBody] Request request, 
 			[FromRoute(Name = "themeName")] string themeName,
-            [FromRoute(Name = "fileName")] string fileName,
+            [FromQuery(Name = "fileName")] string fileName,
             IMediator mediator, IMapper mapper, CancellationToken cancellationToken)
 		{
 			var command = mapper.Map<UpdateThemeFileCommand>(request);
