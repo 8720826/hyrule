@@ -23,7 +23,7 @@ check-merge-target:
       SOURCE_BRANCH="$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME "
 
       ## 定义允许合并的规则
-      if [[ "$SOURCE_BRANCH " == "develop" && "$TARGET_BRANCH" == "release" ]]; then
+      if [[ "$SOURCE_BRANCH" == "develop" && "$TARGET_BRANCH" == "release" ]]; then
         echo "✅ 允许合并"
       elif [[ "$SOURCE_BRANCH" == "release" && "$TARGET_BRANCH" == "master" ]]; then
         echo "✅ 允许合并"
