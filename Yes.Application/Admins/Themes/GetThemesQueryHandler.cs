@@ -30,6 +30,8 @@
                 DirectoryInfo dir = new DirectoryInfo(directory);
 
                 var jsonPath = Path.Combine(directory, "config.json");
+                if(!File.Exists(jsonPath)) continue;
+
                 var json = File.ReadAllText(jsonPath);
 
                 var theme = JsonConvert.DeserializeObject<ThemeModel>(json);
