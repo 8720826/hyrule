@@ -46,7 +46,7 @@
             else
             {
                 title = "服务器内部错误";
-                message = "发生了一个未经处理的异常。";
+                message = ex.Message;
                 _logger.LogError(ex, "Exception");
             }
 
