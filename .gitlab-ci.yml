@@ -20,17 +20,16 @@ check-merge-target:
     - |
       ## 获取当前合并请求的目标分支
       TARGET_BRANCH="$CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
-      SOURCE_BRANCH="$CI_COMMIT_BRANCH"
+      SOURCE_BRANCH="$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME"
 
       ## 定义允许合并的规则
-      if [[ "$SOURCE_BRANCH" == "develop" && "$TARGET_BRANCH" != "release" ]]; then
-        echo "❌ 禁止将 develop 分支合并到 $TARGET_BRANCH"
-        exit 1
-      elif [[ "$SOURCE_BRANCH" == "release" && "$TARGET_BRANCH" != "master" ]]; then
-        echo "❌ 禁止将 release 分支合并到 $TARGET_BRANCH"
-        exit 1
-      else
+      if [[ "$SOURCE_BRANCH" == "develop" && "$TARGET_BRANCH" == "release" ]]; then
         echo "✅ 允许合并"
+      elif [[ "$SOURCE_BRANCH" == "release" && "$TARGET_BRANCH" == "master" ]]; then
+        echo "✅ 允许合并"
+      else
+        echo "❌ 禁止将 $SOURCE_BRANCH 分支合并到 $TARGET_BRANCH"
+        exit 1
       fi
   only:
     - merge_requests
