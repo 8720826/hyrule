@@ -33,8 +33,9 @@ check-merge-target:
         echo "✅ 允许合并"
       fi
   only:
-    - merge_requests
-
+    - develop
+    - release
+    - master
 
 build_develop:
   stage: build
