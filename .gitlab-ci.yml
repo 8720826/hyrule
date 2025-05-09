@@ -4,27 +4,20 @@ stages:
   - deploy
 
 variables:
-  HARBOR_PROJECT: "yescent"
+  Namespace: "yescent"
   ProjectName: "Yes.Blog"
   PackageName: "yes.blog"
   AppPort: "9009"
 
   DockerfilePath: "./${ProjectName}/Dockerfile"
-  #DockerImage: "${HARBOR_HOST}/${HARBOR_PROJECT}/${PackageName}"
-  DockerImage: "${Ali_Docker_Registry}/yescent/${PackageName}"
-  #ProductionDockerImage: "${HARBOR_HOST}/${HARBOR_PROJECT}/${PackageName}"
-  ProductionDockerImage: "${Ali_Docker_Registry}/yescent/${PackageName}"
-  AliDockerImage: "${Ali_Docker_Registry}/yescent/${PackageName}"
+  DockerImage: "${Ali_Docker_Registry}/${Namespace}/${PackageName}"
+
 
 build_develop:
   stage: build
   script:
     - Version=$(sed -n 's/.*<Version>\([^<]*\)<\/Version>.*/\1/p' ./${ProjectName}/${ProjectName}.csproj)
-    - echo "${DockerImage}:v${Version}-develop${CI_PIPELINE_ID}"
-    - docker build -f ${DockerfilePath} -t ${ProductionDockerImage}:v${Version}-develop${CI_PIPELINE_ID}  .
-    #- docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry}
-    #- docker push ${DockerImage}:v${Version}-develop${CI_PIPELINE_ID}
-
+    - docker build -f ${DockerfilePath} -t ${DockerImage}:v${Version}-develop${CI_PIPELINE_ID}  .
   only:
     - develop
 
@@ -34,9 +27,9 @@ build_release:
   stage: build
   script:
     - Version=$(sed -n 's/.*<Version>\([^<]*\)<\/Version>.*/\1/p' ./${ProjectName}/${ProjectName}.csproj)
-    - docker build -f ${DockerfilePath} -t ${ProductionDockerImage}:v${Version}-release${CI_PIPELINE_ID}  .
+    - docker build -f ${DockerfilePath} -t ${DockerImage}:v${Version}-release${CI_PIPELINE_ID}  .
     - docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry}
-    - docker push ${ProductionDockerImage}:v${Version}-release${CI_PIPELINE_ID}
+    - docker push ${DockerImage}:v${Version}-release${CI_PIPELINE_ID}
   only:
     - release
 
@@ -45,39 +38,13 @@ build_master:
   stage: build
   script:
     - Version=$(sed -n 's/.*<Version>\([^<]*\)<\/Version>.*/\1/p' ./${ProjectName}/${ProjectName}.csproj)
-    - docker build -f ${DockerfilePath} -t ${AliDockerImage}:v${Version}.${CI_PIPELINE_ID}  .
-    - docker tag ${AliDockerImage}:v${Version}.${CI_PIPELINE_ID} ${AliDockerImage}:latest
+    - docker build -f ${DockerfilePath} -t ${DockerImage}:v${Version}.${CI_PIPELINE_ID}  .
+    - docker tag ${DockerImage}:v${Version}.${CI_PIPELINE_ID} ${DockerImage}:latest
     - docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry}
-    - docker push ${AliDockerImage}:v${Version}.${CI_PIPELINE_ID}
-    - docker rm -f ${AliDockerImage}:latest && docker push ${AliDockerImage}:latest
+    - docker push ${DockerImage}:v${Version}.${CI_PIPELINE_ID}
+    - docker rm -f ${DockerImage}:latest && docker push ${DockerImage}:latest
   only:
     - master
-
-
-deploy_develop:
-  stage: deploy
-  before_script:
-    - Version=$(sed -n 's/.*<Version>\([^<]*\)<\/Version>.*/\1/p' ./${ProjectName}/${ProjectName}.csproj)
-    ## 安装ssh-agent
-    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    
-    ## 将GitLab服务器私钥添加到ssh-agent代理中
-    - chmod 400 "$SSH_PRIVATE_KEY"
-    - ssh-add "$SSH_PRIVATE_KEY"
-    
-    ## 创建~/.ssh目录
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    
-    ## 创建SSH_KNOWN_HOSTS
-    - echo "SSH_KNOWN_HOSTS = $SSH_KNOWN_HOSTS"
-    - cp "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts
-  script:
-    - ssh -t 192.168.31.123 "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${HARBOR_USERNAME} -p ${HARBOR_PASSWORD} ${HARBOR_HOST} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${DockerImage}:v${Version}-develop${CI_PIPELINE_ID}"
-  only:
-    - develop1
 
 
 
@@ -101,6 +68,6 @@ deploy_production:
     - cp "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh -t ${Server_Ip} "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${ProductionDockerImage}:v${Version}-release${CI_PIPELINE_ID}"
+    - ssh -t ${Server_Ip} "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${DockerImage}:v${Version}-release${CI_PIPELINE_ID}"
   only:
     - release
