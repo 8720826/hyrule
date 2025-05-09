@@ -3,6 +3,50 @@
 @{
 }
 
+@section Styles {
+    <!-- 引入 CodeMirror CSS -->
+    <link rel="stylesheet" href="/admin/codemirror/codemirror.min.css">
+    <!-- 引入 CodeMirror JS -->
+    <script src="/admin/codemirror/codemirror.min.js"></script>
+    <script src="/admin/codemirror/htmlmixed.min.js"></script>
+    <!-- 引入语法高亮模式（如 JavaScript） -->
+    <script src="/admin/codemirror/javascript.min.js"></script>
+
+    <style>
+        /* 自定义 CodeMirror 样式 */
+        .CodeMirror {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            background-color: #f9f9f9;
+			min-height: 600px;
+        }
+
+        .CodeMirror-linenumbers {
+            color: #888;
+            background-color: #f0f0f0;
+            padding-right: 10px;
+            width: 40px;
+        }
+
+        .CodeMirror-cursor {
+            border-left: 2px solid #007bff;
+        }
+
+        .editor-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+}
+
 
 <template x-data x-if="$store.errorMessage||1">
     <div class="alert alert-danger floating-div" x-show="$store.errorMessage" x-transition x-html="$store.errorMessage"></div>
@@ -33,7 +77,14 @@
                 <div class="col-lg-9 col-md-9 col-sm-9">
 
                     <div class="form-group">
-                        <textarea class="form-control" id="editor" x-model="file.content" style="min-height: 600px;"></textarea>
+                        <div id="code-editor" style="width: 100%; min-height: 600px;"></div>
+                        <!-- 高亮编辑器容器 -->
+                       
+
+                        <!-- 隐藏的 textarea 用于保存纯文本 -->
+                        <textarea id="code-content" name="code" style="display: none;" x-model="file.content"></textarea>
+
+               
                     </div>
 
                     <div class="btn-toolbar list-toolbar pull-right">
