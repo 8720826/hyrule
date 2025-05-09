@@ -32,12 +32,8 @@ check-merge-target:
       else
         echo "✅ 允许合并"
       fi
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
   only:
-    - develop
-    - release
-    - master
+    - merge_requests
 
 build_develop:
   stage: build
