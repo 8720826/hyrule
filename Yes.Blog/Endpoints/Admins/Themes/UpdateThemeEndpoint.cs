@@ -4,7 +4,6 @@
 	{
 		public void Map(IEndpointRouteBuilder app) => app.MapPut("/themes", Handle).WithRequestValidation<Request>();
 
-        [Scalar.AspNetCore.ExcludeFromApiReference]
         internal record Request(
 			string Theme
 		);
