@@ -1,5 +1,17 @@
 ﻿document.addEventListener('alpine:init', function () {
     Alpine.data('data', function () {
+        // 初始化 CodeMirror 编辑器
+        const editor = CodeMirror(document.getElementById("code-editor"), {
+            mode: "text/html", // 设置语法模式
+            lineNumbers: true,  // 显示行号
+            theme: "dracula",   // 可选主题
+            value: "",
+            onChange: function (cm) {
+                // 实时同步内容到隐藏的 textarea
+                document.getElementById("code-content").value = cm.getValue();
+            }
+        });
+
         const themeName = getUrlParameter("themeName")||"default";
         const fileName = getUrlParameter("fileName") || "Index.liquid";
 
@@ -26,6 +38,7 @@
                 axios.get('/themes/' + themeName + '/files/' + fileName)
                     .then(data => {
                         this.file = data;
+                        editor.setValue(this.file.content);
                     });
                 return this;
             },
@@ -51,6 +64,9 @@
                 }
             },
             init() {
+
+
+
                 this.loadFiles().loadFile();
                 this.themeName = themeName;
                 this.fileName = fileName;
