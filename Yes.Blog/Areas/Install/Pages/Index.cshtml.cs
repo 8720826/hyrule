@@ -6,7 +6,7 @@ namespace Yes.Blog.Areas.Install.Pages
     {
         public IActionResult OnGet()
         {
-            var defaultTheme = Path.Combine(env.ContentRootPath, "files", "themes", "default");
+            var defaultTheme = Path.Combine(env.ContentRootPath, "files", "defaulttheme");
             var dir = new DirectoryInfo(defaultTheme);
             if (!dir.Exists)
             {
