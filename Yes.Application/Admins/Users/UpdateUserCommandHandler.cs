@@ -31,6 +31,12 @@
             {
                 throw new UserNotExistsException(request.Id);
             }
+            if (user.IsSystemUser())
+            {
+                throw new AccessDeniedException();
+            }
+
+
             user.Update(request.Name, request.Email, request.NickName, request.Password);
             _db.Users.Update(user);
             await _db.SaveChangesAsync();
