@@ -1,6 +1,4 @@
-﻿using static Dapper.SqlMapper;
-
-namespace Yes.Application.Admins.Configurations
+﻿namespace Yes.Application.Admins.Configurations
 {
     public record UpdateConfigurationCommand(
         string Name,
