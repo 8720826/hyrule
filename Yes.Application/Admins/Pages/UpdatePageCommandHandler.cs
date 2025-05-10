@@ -37,6 +37,20 @@
                 throw new ArticleNotExistsException(request.Id);
             }
 
+            var identityUser = await _db.Users.FindAsync(_identity.Id);
+            if (identityUser == null)
+            {
+                throw new UserNotExistsException(_identity.Id);
+            }
+
+            if (!identityUser.IsSystemUser())
+            {
+                if (page.UserId != identityUser.Id)
+                {
+                    throw new AccessDeniedException();
+                }
+            }
+
 
             if (!string.IsNullOrEmpty(request.Slug) && 
                 request.Slug != page.Id.ToString() &&
