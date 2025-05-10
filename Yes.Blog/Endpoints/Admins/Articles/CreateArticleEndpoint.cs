@@ -5,7 +5,7 @@
 		public void Map(IEndpointRouteBuilder app) => app.MapPost("/articles", Handle).WithRequestValidation<Request>();
 
 
-        internal record Request(
+        public record Request(
 			int CategoryId,
 			string Title,
 			string? Slug,
@@ -16,7 +16,7 @@
 			bool IsDraft
 		);
 
-        internal class RequestValidator : AbstractValidator<Request>
+        public class RequestValidator : AbstractValidator<Request>
 		{
 			public RequestValidator()
 			{
