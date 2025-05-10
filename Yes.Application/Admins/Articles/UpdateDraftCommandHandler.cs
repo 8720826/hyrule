@@ -34,6 +34,22 @@
             {
                 throw new ArticleNotExistsException(request.Id);
             }
+
+            var identityUser = await _db.Users.FindAsync(_identity.Id);
+            if (identityUser == null)
+            {
+                throw new UserNotExistsException(_identity.Id);
+            }
+
+            if (!identityUser.IsSystemUser())
+            {
+                if (article.UserId != identityUser.Id)
+                {
+                    throw new AccessDeniedException();
+                }
+            }
+
+
             article.UpdateDraft(request.Title, request.Content, request.Summary, request.Tags, request.Slug, request.CoverUrl, authorObject, categoryObject);
 
             _db.Articles.Update(article);

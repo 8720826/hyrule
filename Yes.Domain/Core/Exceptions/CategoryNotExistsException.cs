@@ -1,6 +1,6 @@
 ﻿namespace Yes.Domain.Core.Exceptions
 {
-    public class CategoryNotExistsException : Exception
+    public class CategoryNotExistsException : BaseException
     {
         public CategoryNotExistsException(int categoryId) : base($"分类id{categoryId}不存在！")
         {
