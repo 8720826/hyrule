@@ -1,18 +1,32 @@
-﻿
-
-namespace Yes.Application.Admins.Themes
+﻿namespace Yes.Application.Admins.Themes
 {
     public record UploadThemeCommand(IFormFile File) : IRequest<UploadThemeCommandResponse>;
 
     public record UploadThemeCommandResponse(string DirName);
-    public class UploadThemeCommandHandler(IWebHostEnvironment env,
+    public class UploadThemeCommandHandler(
+        IWebHostEnvironment env,
+        BlogDbContext db,
+        IIdentityContext identity,
         IOptionsMonitor<BlogSettings> options) : IRequestHandler<UploadThemeCommand, UploadThemeCommandResponse>
     {
         private readonly IWebHostEnvironment _env = env;
         private readonly BlogSettings _settings = options.CurrentValue;
+        private readonly BlogDbContext _db = db;
+        private readonly IIdentityContext _identity = identity;
 
         public async Task<UploadThemeCommandResponse> Handle(UploadThemeCommand request, CancellationToken cancellationToken)
         {
+            var identityUser = await _db.Users.FindAsync(_identity.Id);
+            if (identityUser == null)
+            {
+                throw new UserNotExistsException(_identity.Id);
+            }
+
+            if (!identityUser.IsSystemUser())
+            {
+                throw new AccessDeniedException();
+            }
+
 
             try
             {
