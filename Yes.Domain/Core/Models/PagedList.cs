@@ -13,6 +13,9 @@
     public record PagedList<T>(List<T> Items, int PageIndex, int PageSize, int TotalItems)
     {
         public bool HasNextPage => PageIndex * PageSize < TotalItems;
+        public int NextPage => PageIndex + 1;
+        public int PreviousPage => PageIndex - 1;
+
         public bool HasPreviousPage => PageIndex > 1;
 
         public int TotalPage => (int)Math.Ceiling((double)TotalItems / PageSize);
