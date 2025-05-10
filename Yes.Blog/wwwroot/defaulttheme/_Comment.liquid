@@ -83,31 +83,31 @@
 {% section scripts %}
 <script>
 	document.getElementById("createComment").addEventListener("click", function(){
-		var nickName = document.getElementsByName('nickName').value;
-		var email = document.getElementsByName('email').value;
-		var content = document.getElementsByName('content').value;
-		var url = document.getElementsByName('url').value;
-		var targetId = document.getElementsByName('targetId').value;
-		axios.post("/comments",{
-			targetId:targetId,
-			nickName:nickName,
-			email: email,
-			content: content,
-			url: url
-		}).catch(function (error) {
-			var errorMessage = "";
-            if (error.response) {
-                if (error.response.status == 422) { 
-                    const errors = Object.values(error.response.data.errors);
-                    const values = Array.from(new Set(errors.flat()));
-                    errorMessage = values.join('    ');
-                } else {
-                    errorMessage = error.response.data.detail;
-                }
-            } else {
-                errorMessage = "您的请求未能成功处理，可能是服务器开小差了！";
-            }
-			document.getElementById('comment-error').innerHTML = '<p>'+errorMessage+'</p>';
+	var nickName = document.getElementsByName('nickName')[0].value;
+	var email = document.getElementsByName('email')[0].value;
+	var content = document.getElementsByName('content')[0].value;
+	var url = document.getElementsByName('url')[0].value;
+	var targetId = document.getElementsByName('targetId')[0].value;
+	axios.post("/comments",{
+	targetId:targetId,
+	nickName:nickName,
+	email: email,
+	content: content,
+	url: url
+	}).catch(function (error) {
+	var errorMessage = "";
+	if (error.response) {
+	if (error.response.status == 422) {
+	const errors = Object.values(error.response.data.errors);
+	const values = Array.from(new Set(errors.flat()));
+	errorMessage = values.join('    ');
+	} else {
+	errorMessage = error.response.data.detail;
+	}
+	} else {
+	errorMessage = "您的请求未能成功处理，可能是服务器开小差了！";
+	}
+	document.getElementById('comment-error').innerHTML = '<p>'+errorMessage+'</p>';
 		})
 	});
 
