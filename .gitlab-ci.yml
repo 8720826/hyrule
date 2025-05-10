@@ -4,12 +4,6 @@ stages:
   - deploy
 
 variables:
-  Namespace: "yescent"
-  ProjectName: "Yes.Blog"
-  PackageName: "yes.blog"
-  MasterPackageName: "hyrule"
-  AppPort: "9009"
-
   DockerfilePath: "./${ProjectName}/Dockerfile"
   DockerImage: "${Ali_Docker_Registry}/${Namespace}/${PackageName}"
   MasterDockerImage: "${Ali_Docker_Registry}/${Namespace}/${MasterPackageName}"
@@ -94,7 +88,7 @@ deploy_production:
     - cp "$SSH_KNOWN_HOSTS" ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh -t ${Server_Ip} "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${DockerImage}:${ReleaseVersion}"
+    - ssh -t ${Server_Ip} "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/${PackageName}:/app/files --name ${PackageName} -p ${AppPort}:8080 ${DockerImage}:${ReleaseVersion}"
   only:
     - release
 
@@ -120,6 +114,6 @@ deploy_master:
     - cp "$SSH_KNOWN_HOSTS2" ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - ssh -t ${Server_Ip2} "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${MasterDockerImage}:${MasterVersion}"
+    - ssh -t ${Server_Ip2} "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/${PackageName}:/app/files --name ${PackageName} -p ${AppPort}:8080 ${MasterDockerImage}:${MasterVersion}"
   only:
     - master
