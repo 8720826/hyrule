@@ -70,6 +70,14 @@
 			{% endfor %}
 
 
+			{% if Model.Comments.HasPreviousPage %}
+			<a class="enabled  current" href="?page={{ Model.Comments.PreviousPage }}">上一页</a>
+			{% endif %}
+
+			{% if Model.Comments.HasNextPage %}
+			<a class="enabled  current" href="?page={{ Model.Comments.NextPage }}">下一页</a>
+			{% endif %}
+			
 		</div>
 		{% endif %}
 	</section>
