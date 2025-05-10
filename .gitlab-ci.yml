@@ -98,3 +98,28 @@ deploy_production:
   only:
     - release
 
+
+deploy_master:
+  stage: deploy
+  before_script:
+    - Version=$(sed -n 's/.*<Version>\([^<]*\)<\/Version>.*/\1/p' ./${ProjectName}/${ProjectName}.csproj)
+    - MasterVersion=v${Version}.${CI_PIPELINE_ID}
+    ## 安装ssh-agent
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    
+    ## 将GitLab服务器私钥添加到ssh-agent代理中
+    - chmod 400 "$SSH_PRIVATE_KEY"
+    - ssh-add "$SSH_PRIVATE_KEY"
+    
+    ## 创建~/.ssh目录
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    
+    ## 创建SSH_KNOWN_HOSTS
+    - cp "$SSH_KNOWN_HOSTS2" ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - ssh -t ${Server_Ip2} "(docker stop ${PackageName} && docker rm ${PackageName} || echo 'Container ${PackageName} not found, skipping removal.') && docker login -u ${Ali_Docker_UserName} -p ${Ali_Docker_Password} ${Ali_Docker_Registry} && docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/yesblog:/app/files --name ${PackageName} -p ${AppPort}:8080 ${MasterDockerImage}:${MasterVersion}"
+  only:
+    - master
