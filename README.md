@@ -60,10 +60,13 @@ docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/hyrule:/app/files --
 
 
 ## 许可证
-
-- MIT License
+ - MIT License
 
  您可以自由使用、修改和分发本项目的代码，但请保留原作者的版权声明和许可证信息。
+
+
+
+
 
  ---
 
