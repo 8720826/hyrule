@@ -9,6 +9,7 @@
                 axios.post('login', this.user)
                     .then(data => {
                         localStorage.setItem("username", this.user.name);
+                        localStorage.setItem("token", data.token);
                         location.href = "/admin";
                     })
             },
