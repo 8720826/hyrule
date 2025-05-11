@@ -2,6 +2,8 @@
     Alpine.data('data', function () {
         return {
             user: {
+                name: "",
+                password: ""
             },
             login() {
                 axios.post('login', this.user)
