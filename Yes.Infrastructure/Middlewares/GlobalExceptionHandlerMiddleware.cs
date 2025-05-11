@@ -19,8 +19,12 @@
 
         private async Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
-            context.Response.ContentType = "application/problem+json";
-            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            if (!context.Response.HasStarted)
+            {
+                context.Response.ContentType = "application/problem+json";
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            }
+
             var title = "";
             var message = "";
             var exType = ex.GetType();
@@ -50,22 +54,25 @@
                 _logger.LogError(ex, "Exception");
             }
 
-            var acceptHeader = context.Request.Headers["Accept"].FirstOrDefault();
-            var isAjaxRequest = acceptHeader?.Contains("application/json") == true;
-            if (isAjaxRequest)
+            if (!context.Response.HasStarted)
             {
-                var problem = new ProblemDetails
+                var acceptHeader = context.Request.Headers["Accept"].FirstOrDefault();
+                var isAjaxRequest = acceptHeader?.Contains("application/json") == true;
+                if (isAjaxRequest)
                 {
-                    Status = StatusCodes.Status500InternalServerError,
-                    Title = title,
-                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-                    Detail = message
-                };
-                await context.Response.WriteAsJsonAsync(problem);
-            }
-            else
-            {
-                await context.Response.WriteAsync(message);
+                    var problem = new ProblemDetails
+                    {
+                        Status = StatusCodes.Status500InternalServerError,
+                        Title = title,
+                        Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                        Detail = message
+                    };
+                    await context.Response.WriteAsJsonAsync(problem);
+                }
+                else
+                {
+                    await context.Response.WriteAsync(message);
+                }
             }
 
         }
