@@ -45,7 +45,7 @@ docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/hyrule:/app/files --
 #### 安装运行
 
 1. 部署后访问 http(s)://{domain}:{port}
-2. 填写数据库连接信息安装
+2. 填写数据库连接信息安装，此时将自动创建数据库
 3. 默认账号密码 admin / admin
 4. 后台访问地址 http(s)://{domain}:{port}/admin
 
