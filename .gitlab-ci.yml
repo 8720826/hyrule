@@ -16,7 +16,7 @@ sync_to_github:
   script:
     - git config --global user.email "ci@example.com"
     - git config --global user.name "GitLab CI"
-    - git remote add github https://oauth2:${GITHUB_TOKEN}@github.com/8720826/Hyrule.git
+    - git remote add github https://oauth2:${GITHUB_TOKEN}@github.com/8720826/hyrule.git
     - git push github --all
     - git push github --tags
 
