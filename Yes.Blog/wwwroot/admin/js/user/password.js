@@ -20,7 +20,7 @@
                 this.isSubmitting = true;
                 axios.put('users/password', this.user)
                     .then(data => {
-                        location.href = "/admin/user/profile";
+                        location.href = "/admin/user/password";
                     })
                     .finally(() => {
                         this.isSubmitting = false;
