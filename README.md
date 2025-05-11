@@ -55,7 +55,7 @@ docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/hyrule:/app/files --
 #### 演示站点
 
 - [https://hyrule.yescent.com](https://hyrule.yescent.com)
-- 后台 [https://hyrule.yescent.com/admin)](https://hyrule.yescent.com/admin)
+- 后台 [https://hyrule.yescent.com/admin](https://hyrule.yescent.com/admin)
 - 账号密码 test  /  test
 
 
