@@ -2,12 +2,33 @@ stages:
   - check
   - build
   - deploy
+  - sync
 
 variables:
   DockerfilePath: "./${ProjectName}/Dockerfile"
   DockerImage: "${Ali_Docker_Registry}/${Namespace}/${PackageName}"
   MasterDockerImage: "${Ali_Docker_Registry}/${Namespace}/${MasterPackageName}"
 
+
+# sync_to_github:
+#   stage: sync
+#   image: alpine/git
+#   script:
+#     - git config --global user.email "ci@example.com"
+#     - git config --global user.name "GitLab CI"
+#     - git remote add github https://oauth2:${GITHUB_TOKEN}@github.com/8720826/Hyrule.git
+#     - git push github --all
+#     - git push github --tags
+
+sync_to_gitee:
+  stage: sync
+  image: alpine/git
+  script:
+    - git config --global user.email "ci@example.com"
+    - git config --global user.name "GitLab CI"
+    - git remote add gitee https://oauth2:${GITEE_TOKEN}@gitee.com/username/project.git
+    - git push gitee --all
+    - git push gitee --tags
 
 check-merge-target:
   stage: check
