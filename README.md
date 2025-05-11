@@ -39,7 +39,6 @@
 
 ~~~
 docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/hyrule:/app/files --name hyrule -p 8080:8080 registry.cn-guangzhou.aliyuncs.com/yescent/hyrule:latest
-订单
 
 ~~~
 
