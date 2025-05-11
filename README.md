@@ -1,4 +1,4 @@
-# Hyrule 开源博客系统说明文档
+# Hyrule 开源博客系统
 
 
 
@@ -8,33 +8,56 @@
 
 ## 技术栈
 
-- [ ] 开发语言: C# (.NET 9.0)
-- [ ] 核心框架: ASP.NET Core Minimal API
-- [ ] 架构模式: CQRS with MediatR
-- [ ] 模板引擎: Liquid
-- [ ] 数据库支持:MySQL / SQL Server /PostgreSQL
-- [ ] ORM: Entity Framework Core 9
-- [ ] 前端: 原生js + alpine
+- 开发语言: C# (.NET 9.0)
+- 核心框架: ASP.NET Core Minimal API
+- 架构模式: CQRS with MediatR
+- 模板引擎: Liquid
+- 数据库支持:MySQL / SQL Server /PostgreSQL
+- ORM: Entity Framework Core
+- 前端: 原生js + alpine
 
 ## 功能特性
 
-- [ ] 多用户博客管理
-- [ ] 文章/分类/标签系统
-- [ ] 评论与审核功能
-- [ ] SEO友好URL
-- [ ] 自定义URL
-- [ ] Markdown支持
-- [ ] 实时主题热重载
-- [ ] RESTful API
-- [ ] 支持多种数据库
-- [ ] 支持多种文件存储方式
+- 多用户博客管理
+- 文章/分类/标签系统
+- 评论与审核功能
+- SEO友好URL
+- 自定义URL
+- Markdown支持
+- 实时主题热重载
+- RESTful API
+- 支持多种数据库
+- 支持多种文件存储方式
 
 ## 快速开始
 
-##环境要求
-- [ ] .NET SDK 9.0+
-- [ ] 支持的数据库任选其一
+#### 环境要求
+- .NET SDK 9.0+
+- 支持的数据库任选其一
 
+#### 部署方式
+
+&#8195;&#8195; 推荐在linux系统通过docker方式一键部署
+
+~~~
+docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/hyrule:/app/files --name hyrule -p 8080:8080 registry.cn-guangzhou.aliyuncs.com/yescent/hyrule:latest
+订单
+
+~~~
+
+#### 安装运行
+1. 安装后访问 http(s)://{domain}:8080
+2. 填写数据库连接信息安装
+3. 默认账号密码 admin / admin
+4. 后台访问地址 http(s)://{domain}:8080/admin
+
+
+
+
+#### 演示站点
+
+- [https://hyrule.yescent.com](https://hyrule.yescent.com)
+- 账号密码 test  /  test
 
 
 ## 许可证
