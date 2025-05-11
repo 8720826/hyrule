@@ -1,7 +1,5 @@
 # Hyrule 开源博客系统
 
-
-
 ## 概述
 
 &#8195;&#8195; Hyrule 是一个基于现代化技术栈构建的开源博客系统，采用简洁高效的架构设计，支持高度定制化开发。系统遵循CQRS模式，内置多数据库支持，并提供灵活的主题模板系统。
@@ -21,7 +19,7 @@
 - 多用户博客管理
 - 文章/分类/标签系统
 - 评论与审核功能
-- SEO友好URL
+- SEO友好
 - 自定义URL
 - Markdown支持
 - 实时主题热重载
@@ -37,7 +35,7 @@
 
 #### 部署方式
 
-&#8195;&#8195; 推荐在linux系统通过docker方式一键部署
+推荐在linux系统通过docker方式一键部署
 
 ~~~
 docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/hyrule:/app/files --name hyrule -p 8080:8080 registry.cn-guangzhou.aliyuncs.com/yescent/hyrule:latest
@@ -46,10 +44,11 @@ docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/hyrule:/app/files --
 ~~~
 
 #### 安装运行
-1. 安装后访问 http(s)://{domain}:8080
+
+1. 部署后访问 http(s)://{domain}:{port}
 2. 填写数据库连接信息安装
 3. 默认账号密码 admin / admin
-4. 后台访问地址 http(s)://{domain}:8080/admin
+4. 后台访问地址 http(s)://{domain}:{port}/admin
 
 
 
@@ -61,7 +60,10 @@ docker run -e TZ=Asia/Shanghai -d --restart=always -v /data/hyrule:/app/files --
 
 
 ## 许可证
- - MIT License
+
+- MIT License
+
+ 您可以自由使用、修改和分发本项目的代码，但请保留原作者的版权声明和许可证信息。
 
  ---
 
