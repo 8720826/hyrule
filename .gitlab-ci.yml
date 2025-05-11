@@ -26,7 +26,7 @@ sync_to_gitee:
   script:
     - git config --global user.email "ci@example.com"
     - git config --global user.name "GitLab CI"
-    - git remote add gitee https://oauth2:${GITEE_TOKEN}@gitee.com/username/project.git
+    - git remote add gitee https://oauth2:${GITEE_TOKEN}@gitee.com/q8720826/Hyrule.git
     - git push gitee --all
     - git push gitee --tags
 
