@@ -3,7 +3,7 @@ namespace Yes.Blog.Endpoints.Blogs
 {
     public class SearchEndpoint : BlogEndpointScheme, IEndpoint
 	{
-		public void Map(IEndpointRouteBuilder app) => app.MapPost("/search", Handle).DisableAntiforgery();
+		public void Map(IEndpointRouteBuilder app) => app.MapPost("/search", Handle).DisableAntiforgery().AllowAnonymous();
 
         
         public record Request(

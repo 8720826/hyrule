@@ -1,6 +1,6 @@
 namespace Yes.Blog.Areas.Admin.Pages.Theme
 {
-    public class DetailModel : PageModel
+    public class DetailModel : BasePageModel
     {
         public void OnGet()
         {

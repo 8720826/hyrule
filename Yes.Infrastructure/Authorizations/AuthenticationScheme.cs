@@ -2,10 +2,11 @@
 {
     public class AuthenticationScheme
     {
-        public const string MerchanScheme = "merchan";
+        public const string AdminScheme = "admin";
 
-        public const string UserScheme = "user";
+        public const string ApiScheme = "api";
 
-        public const string UserApiScheme = "userapi";
+
+
     }
 }

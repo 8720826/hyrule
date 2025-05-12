@@ -2,7 +2,7 @@
 {
     public class CreateCommentEndpoint : BlogEndpointScheme, IEndpoint
 	{
-		public void Map(IEndpointRouteBuilder app) => app.MapPost("/comments", Handle).WithRequestValidation<Request>();
+		public void Map(IEndpointRouteBuilder app) => app.MapPost("/comments", Handle).WithRequestValidation<Request>().AllowAnonymous();
 
         
         public record Request(
