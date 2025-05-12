@@ -2,7 +2,7 @@
 {
     public class IndexEndpoint : BlogEndpointScheme, IEndpoint
 	{
-		public void Map(IEndpointRouteBuilder app) => app.MapGet("/{**path}", Handle);
+		public void Map(IEndpointRouteBuilder app) => app.MapGet("/{**path}", Handle).AllowAnonymous();
 
 		private async Task<Microsoft.AspNetCore.Http.IResult> Handle(
 			IMediator mediator,

@@ -8,7 +8,9 @@
         public static IServiceCollection RegisterBlogModule(this IServiceCollection services, WebApplicationBuilder builder)
         {
             var env = builder.Environment;
+            var configuration = builder.BuildConfiguration();
 
+            services.AddConfiguration(configuration);
             services.AddRazorPages();
             services.AddEndpoints();
             services.AddViewEngine(env);
@@ -20,11 +22,9 @@
             services.AddMediatR();
             services.AddHttpClient();
 
-            services.AddConfiguration(builder);
-
             services.AddHttpContextAccessor();
 
-            services.AddUserAuthentication();
+            services.AddAdminAuthentication(configuration);
 
             services.AddAuthorization();
 
@@ -50,8 +50,7 @@
             return services;
         }
 
-
-        public static IServiceCollection AddConfiguration(this IServiceCollection services, WebApplicationBuilder builder)
+        private static IConfiguration BuildConfiguration(this WebApplicationBuilder builder)
         {
             var basePath = Path.Combine(builder.Environment.ContentRootPath, "files", "config");
 
@@ -66,6 +65,13 @@
               .AddJsonFile("appsettings.blog.json", true, true)
               .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
               .Build();
+
+            return configuration;
+        }
+
+
+        public static IServiceCollection AddConfiguration(this IServiceCollection services, IConfiguration configuration)
+        {
 
             services.Configure<BlogSettings>(configuration);
 
@@ -220,10 +226,16 @@
 
         public static IApplicationBuilder MapEndpoints(this WebApplication app)
         {
+            var apiPolicy = new AuthorizationPolicyBuilder()
+            .AddAuthenticationSchemes(AuthenticationScheme.ApiScheme)
+            .RequireAuthenticatedUser()
+            .Build();
+
+
             var endpoints = app.Services.GetRequiredService<IEnumerable<IEndpoint>>().OrderByDescending(x => x.Priority);
             foreach (var route in endpoints)
             {
-                var routeGroup = app.MapGroup($"/{route.Prefix}").WithTags(route.Tags);
+                var routeGroup = app.MapGroup($"/{route.Prefix}").WithTags(route.Tags).RequireAuthorization();
                 route.Map(routeGroup);
 
             }

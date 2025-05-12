@@ -3,7 +3,7 @@ namespace Yes.Blog.Endpoints.Blogs
 {
     public class InstallEndpoint : BlogEndpointScheme, IEndpoint
     {
-        public void Map(IEndpointRouteBuilder app) => app.MapPost("install", Handle).WithRequestValidation<Request>();
+        public void Map(IEndpointRouteBuilder app) => app.MapPost("install", Handle).WithRequestValidation<Request>().AllowAnonymous();
 
         public record Request(
             string DatabaseType,

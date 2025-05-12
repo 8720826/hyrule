@@ -18,6 +18,7 @@
         string CategoryRoute,
         string SearchRoute, 
         string TagRoute,
+        int TokenLifetimeMinutes,
         StorageSettingsResponse Storage
     );
 

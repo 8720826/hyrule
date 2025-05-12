@@ -1,6 +1,6 @@
 namespace Yes.Blog.Areas.Admin.Pages.Theme
 {
-    public class ChangeModel : PageModel
+    public class ChangeModel : BasePageModel
     {
 
     }
