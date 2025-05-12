@@ -49,3 +49,6 @@ global using Yes.Infrastructure.Authorizations.Identity.Context;
 global using Yes.Infrastructure.Data.DbContexts;
 global using Yes.Infrastructure.Migrator.Migrations;
 global using System.Security;
+global using System.Security.Cryptography;
+global using Yes.Infrastructure.Helpers;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;

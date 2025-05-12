@@ -1,9 +1,11 @@
-﻿namespace Yes.Blog.Endpoints.Admins.Auths
+﻿using Yes.Infrastructure.Authorizations;
+
+namespace Yes.Blog.Endpoints.Admins.Auths
 {
     public class UserLoginEndpoint : AuthEndpointScheme, IEndpoint
 	{
 
-		public void Map(IEndpointRouteBuilder app) => app.MapPost("/login", Handle).WithRequestValidation<Request>();
+		public void Map(IEndpointRouteBuilder app) => app.MapPost("/login", Handle).WithRequestValidation<Request>().AllowAnonymous();
 
         public record Request(string Name, string Password);
 
@@ -21,7 +23,7 @@
 			var command = mapper.Map<UserLoginCommand>(request);
 			var response = await mediator.Send(command, cancellationToken);
 
-			await context.SignIn(response.Identity);
+			await context.SignIn(response.Identity, response.TokenLifetimeMinutes);
 
 			return Result.Ok(response);
 		}

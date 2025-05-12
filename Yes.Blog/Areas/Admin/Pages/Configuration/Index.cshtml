@@ -31,6 +31,7 @@
         <li x-bind:class="tab=='display'?`active`:``"><a href="javascript:;" x-on:click="tab='display'">显示设置</a></li>
         <li x-bind:class="tab=='link'?`active`:``"><a href="javascript:;" x-on:click="tab='link'">固定链接设置</a></li>
         <li x-bind:class="tab=='storage'?`active`:``"><a href="javascript:;" x-on:click="tab='storage'">文件存储</a></li>
+        <li x-bind:class="tab=='auth'?`active`:``"><a href="javascript:;" x-on:click="tab='auth'">安全</a></li>
     </ul>
 
     <div class="row">
@@ -210,6 +211,15 @@
                     </div>
                 </div>
 
+
+                <div class="col-lg-6" x-show="tab=='auth'">
+
+                    <div class="form-group">
+                        <label>登录有效期（分钟）</label>
+                        <input type="text" class="form-control" x-model="config.tokenLifetimeMinutes">
+                    </div>
+
+                </div>
             </div>
 
             <div class="btn-toolbar list-toolbar">

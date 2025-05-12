@@ -53,6 +53,12 @@
 
             }
         };
+
+
+
+        public string SecretKey { get; set; } = Guid.NewGuid().ToString();
+
+        public int TokenLifetimeMinutes { get; set; } = 60 * 24 * 7;
     }
 
 

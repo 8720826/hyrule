@@ -3,7 +3,7 @@
     public class UserLogoutEndpoint : AuthEndpointScheme, IEndpoint
 	{
 
-		public void Map(IEndpointRouteBuilder app) => app.MapPost("/logout", Handle);
+		public void Map(IEndpointRouteBuilder app) => app.MapPost("/logout", Handle).AllowAnonymous();
 
 
 		private async Task<IResult> Handle(IMediator mediator, IMapper mapper, HttpContext context, CancellationToken cancellationToken)

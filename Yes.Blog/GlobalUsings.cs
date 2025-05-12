@@ -42,6 +42,8 @@ global using Yes.Infrastructure.Authorizations;
 global using Yes.Infrastructure.Middlewares;
 global using Yes.Infrastructure.ViewEngine;
 global using IResult = Yes.Domain.Core.Models.IResult;
-
+global using Microsoft.AspNetCore.Authorization;
 global using Yes.Application.Installs;
 global using Scalar.AspNetCore;
+global using Yes.Blog.Areas.Admin.Pages;
+global using Yes.Infrastructure.Authorizations.User;

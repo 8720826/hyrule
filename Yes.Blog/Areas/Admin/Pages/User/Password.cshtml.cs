@@ -1,6 +1,6 @@
 namespace Yes.Blog.Areas.Admin.Pages.User
 {
-    public class PasswordModel : PageModel
+    public class PasswordModel : BasePageModel
     {
         public void OnGet()
         {

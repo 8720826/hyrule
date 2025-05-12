@@ -1,6 +1,6 @@
 namespace Yes.Blog.Areas.Admin.Pages.Theme
 {
-    public class IndexModel : PageModel
+    public class IndexModel : BasePageModel
     {
    
     }

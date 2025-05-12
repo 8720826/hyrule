@@ -3,7 +3,7 @@
 
     axios.defaults.baseURL = "/admin/api/"
     axios.defaults.timeout = 3000;
-    axios.defaults.headers.common['Authorization'] = "";
+    axios.defaults.headers.common['Authorization'] = "Bearer " + localStorage.getItem("token")+"";
     axios.defaults.headers.post['Content-Type'] = 'application/json';
     axios.interceptors.request.use(
         (config) => {

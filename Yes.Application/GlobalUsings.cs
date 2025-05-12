@@ -33,3 +33,7 @@ global using Yes.Infrastructure.Authorizations.Identity;
 global using Microsoft.Data.SqlClient;
 global using Yes.Infrastructure.Migrator.Providers;
 global using Yes.Infrastructure.Helpers;
+global using System.Security.Claims;
+global using System.IdentityModel.Tokens.Jwt;
+global using Microsoft.IdentityModel.Tokens;
+global using System.Text;

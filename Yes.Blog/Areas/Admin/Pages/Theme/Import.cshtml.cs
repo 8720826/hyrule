@@ -1,6 +1,6 @@
 namespace Yes.Blog.Areas.Admin.Pages.Theme
 {
-    public class ImportModel : PageModel
+    public class ImportModel : BasePageModel
     {
         public void OnGet()
         {
