@@ -2,11 +2,11 @@
 {
 
 
-    public class UserApiAuthorizeAttribute : AuthorizeAttribute
+    public class ApiAuthorizeAttribute : AuthorizeAttribute
     {
-        public UserApiAuthorizeAttribute()
+        public ApiAuthorizeAttribute()
         {
-            AuthenticationSchemes = AuthenticationScheme.UserApiScheme;
+            AuthenticationSchemes = AuthenticationScheme.ApiScheme;
         }
     }
 }

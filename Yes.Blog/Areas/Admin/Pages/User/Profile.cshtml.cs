@@ -1,6 +1,6 @@
 namespace Yes.Blog.Areas.Admin.Pages.User
 {
-    public class ProfileModel : PageModel
+    public class ProfileModel : BasePageModel
     {
 
     }
