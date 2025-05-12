@@ -1,8 +1,10 @@
 
 
+
+
 namespace Yes.Blog.Areas.Install.Pages
 {
-    public class IndexModel(IOptionsMonitor<BlogSettings> options, IWebHostEnvironment env, IFileService fileService) : PageModel
+    public class IndexModel(IOptionsMonitor<BlogSettings> options, IWebHostEnvironment env, IFileService fileService) : BasePageModel
     {
         public IActionResult OnGet()
         {
