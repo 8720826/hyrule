@@ -22,7 +22,7 @@
         public async Task<GetPageQueryResponse> Handle(GetPageQuery request, CancellationToken cancellationToken)
         {
 			var page = await _db.Articles.FindAsync(request.Id);
-            if (page == null)
+            if (page == null || page.Status == ArticleStatusEnum.Deleted)
             {
                 throw new PageNotExistsException(request.Id);
             }

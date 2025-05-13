@@ -8,7 +8,7 @@ namespace Yes.Application.Admins.Articles
         private readonly BlogDbContext _db = db;
         public async Task<bool> IsSlugInUse(string slug)
         {
-            return await _db.Articles.AnyAsync(x => x.Slug == slug);
+            return await _db.Articles.AnyAsync(x => x.Slug == slug && x.Status!= ArticleStatusEnum.Deleted);
         }
 
         public async Task<string> CreateUniqueSlug()
