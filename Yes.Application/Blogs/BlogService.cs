@@ -422,7 +422,7 @@
             {
                 x.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10);
 
-                var articles = _db.Articles.Where(x => x.Type == ArticleTypeEnum.Page).OrderByDescending(x => x.Sort).Take(top).Select(x => x.ArticleEntityToSinglePage()).ToList();
+                var articles = _db.Articles.Where(x => x.Type == ArticleTypeEnum.Page && x.Status != ArticleStatusEnum.Deleted).OrderByDescending(x => x.Sort).Take(top).Select(x => x.ArticleEntityToSinglePage()).ToList();
 
                 articles.ForEach(x =>
                 {
@@ -441,7 +441,7 @@
             {
                 articleEntity = await _db.Articles.FirstOrDefaultAsync(x => x.Slug == slug);
             }
-            if (articleEntity == null)
+            if (articleEntity == null || articleEntity.Status == ArticleStatusEnum.Deleted)
             {
                 throw new PageNotFoundException();
             }

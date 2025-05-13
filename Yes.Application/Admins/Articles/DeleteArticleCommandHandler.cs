@@ -14,7 +14,7 @@
         public async Task<DeleteArticleCommandResponse> Handle(DeleteArticleCommand request, CancellationToken cancellationToken)
         {
             var article = await _db.Articles.FindAsync(request.Id);
-			if (article != null)
+			if (article != null && article.Status!= ArticleStatusEnum.Deleted)
             {
                 var identityUser = await _db.Users.FindAsync(_identity.Id);
                 if (identityUser == null)
