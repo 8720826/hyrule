@@ -1,15 +1,15 @@
 ﻿
-
 namespace Yes.Application.Admins.Auths
 {
     public record ValidateCommand(string Token) : IRequest<ValidateCommandResponse>;
 
     public record ValidateCommandResponse(string Token, IdentityInfo Identity, int TokenLifetimeMinutes);
 
-    public class ValidateCommandHandler(BlogDbContext db, IOptionsMonitor<BlogSettings> options) : IRequestHandler<ValidateCommand, ValidateCommandResponse>
+    public class ValidateCommandHandler(BlogDbContext db, IOptionsMonitor<BlogSettings> options, IJwtProvider jwtProvider) : IRequestHandler<ValidateCommand, ValidateCommandResponse>
     {
         private readonly BlogDbContext _db = db;
         private readonly BlogSettings _settings = options.CurrentValue;
+        private readonly IJwtProvider _jwtProvider = jwtProvider;
         public async Task<ValidateCommandResponse> Handle(ValidateCommand request, CancellationToken cancellationToken)
         {
             var token = request.Token;
@@ -20,21 +20,7 @@ namespace Yes.Application.Admins.Auths
 
             try
             {
-                var securityKeyBase64 = JwtHelper.GenerateKey(_settings.SecretKey ?? "");
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKeyBase64));
-
-                var jwtHander = new JwtSecurityTokenHandler();
-                var claimsIdentity = jwtHander.ValidateToken(token, new TokenValidationParameters
-                {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateIssuerSigningKey = false,
-                    ValidIssuer = "",
-                    ValidAudience = "",
-                    IssuerSigningKey = key,
-                    ValidateLifetime = true,
-
-                }, out _);
+                var claimsIdentity = await _jwtProvider.ReadToken(token);
 
                 var id = int.Parse(claimsIdentity.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value ?? "0");
 
