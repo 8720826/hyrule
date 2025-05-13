@@ -2,7 +2,7 @@
 {
     public class GetConfigurationEndpoint : ConfigurationEndpointScheme, IEndpoint
 	{
-		public void Map(IEndpointRouteBuilder app) => app.MapGet("/configuration", Handle);
+		public void Map(IEndpointRouteBuilder app) => app.MapGet("/configuration", Handle).AllowAnonymous();
 
 
 		private async Task<IResult> Handle(
