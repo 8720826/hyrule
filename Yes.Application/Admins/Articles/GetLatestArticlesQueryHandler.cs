@@ -15,7 +15,7 @@
         private readonly BlogDbContext _db = db;
         public async Task<List<GetLatestArticlesQueryResponse>> Handle(GetLatestArticlesQuery request, CancellationToken cancellationToken)
         {
-            var query = _db.Articles.AsNoTracking().Where(x=>x.Type==ArticleTypeEnum.Article).OrderByDescending(x => x.Id).Select(article =>
+            var query = _db.Articles.AsNoTracking().Where(x=>x.Type==ArticleTypeEnum.Article && x.Status != ArticleStatusEnum.Deleted).OrderByDescending(x => x.Id).Select(article =>
                 new GetLatestArticlesQueryResponse(
                     article.Id,
                     article.Title,

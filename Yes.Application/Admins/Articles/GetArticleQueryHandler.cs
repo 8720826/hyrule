@@ -21,7 +21,7 @@
         public async Task<GetArticleQueryResponse> Handle(GetArticleQuery request, CancellationToken cancellationToken)
         {
 			var article = await _db.Articles.FindAsync(request.Id);
-            if (article == null)
+            if (article == null|| article.Status== ArticleStatusEnum.Deleted)
             {
                 throw new ArticleNotExistsException(request.Id);
             }

@@ -22,7 +22,7 @@
                 throw new AccessDeniedException();
             }
 
-            var hasArticlesInCategory = await _db.Articles.AnyAsync(x => x.CategoryId == request.Id, cancellationToken);
+            var hasArticlesInCategory = await _db.Articles.AnyAsync(x => x.CategoryId == request.Id && x.Status!= ArticleStatusEnum.Deleted, cancellationToken);
             if (hasArticlesInCategory)
             {
                 throw new DeleteCategoryException("分类下还有文章，无法删除！");
