@@ -1,7 +1,16 @@
 ###############################################################################
 # Set default behavior to automatically normalize line endings.
 ###############################################################################
-.js linguist-language=C#
+# 强制识别所有 .cs 文件为 C#
+*.cs linguist-language=C#
+
+# 排除不需要统计的文件（可选）
+*.designer.cs -linguist-detectable
+*.generated.cs -linguist-detectable
+
+# 确保特定文件不被识别为其他语言（可选）
+*.js linguist-language=C#
+*.liquid linguist-language=C#
 ###############################################################################
 # Set default behavior for command prompt diff.
 #
